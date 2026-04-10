@@ -1,0 +1,444 @@
+﻿<!DOCTYPE html>
+<html lang="">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-site-verification" content="rmlJ3C4AIh0ruwJsEG0wLRkWhXNZ7SSAZth51NgTw8o" />
+    
+		<meta name="description" content="Aplikasi Sistem Informasi Pelaporan PKK Kabupaten Bandung" />
+		<meta name="author" content="Didik Kurniawan" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>SIMPEL PKK - TP PKK KABUPATEN BANDUNG</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="https://demo.devaptika.web.id/assets/img/favicon.ico" />
+    <!-- For iPhone -->
+    <link rel="apple-touch-icon-precomposed" href="https://demo.devaptika.web.id/assets/cryptodash/assets/images/apple-touch-icon-57-precomposed.png">
+    <!-- For iPhone 4 Retina display -->
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="https://demo.devaptika.web.id/assets/cryptodash/assets/images/apple-touch-icon-114-precomposed.png">
+    <!-- For iPad -->
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="https://demo.devaptika.web.id/assets/cryptodash/assets/images/apple-touch-icon-72-precomposed.png">
+    <!-- For iPad Retina display -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://demo.devaptika.web.id/assets/cryptodash/assets/images/apple-touch-icon-144-precomposed.png">
+    <link href="https://demo.devaptika.web.id/assets/bower_components/select2/dist/css/select2.min.css" rel="stylesheet">
+
+    
+		<link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" media="screen" />
+    
+    <!-- CORE CSS FRAMEWORK - START -->
+    <link href="https://demo.devaptika.web.id/assets/cryptodash/assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="https://demo.devaptika.web.id/assets/cryptodash/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://demo.devaptika.web.id/assets/cryptodash/assets/plugins/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://demo.devaptika.web.id/assets/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://demo.devaptika.web.id/assets/bower_components/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="https://demo.devaptika.web.id/assets/cryptodash/assets/fonts/webfont/cryptocoins.css" rel="stylesheet" type="text/css" />
+    <link href="https://demo.devaptika.web.id/assets/cryptodash/assets/fonts/webfont/cryptocoins.css" rel="stylesheet" type="text/css">
+    <link href="https://demo.devaptika.web.id/assets/cryptodash/assets/css/animate.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://demo.devaptika.web.id/assets/cryptodash/assets/plugins/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" type="text/css" />
+    <!-- CORE CSS FRAMEWORK - END -->
+
+    <!-- HEADER SCRIPTS INCLUDED ON THIS PAGE - START -->
+    <link href="https://demo.devaptika.web.id/assets/cryptodash/assets/plugins/candlestick/jqcandlestick.css" rel="stylesheet" type="text/css" />
+    <!-- HEADER SCRIPTS INCLUDED ON THIS PAGE - END -->
+
+    <!-- CORE CSS TEMPLATE - START -->
+    <link href="https://demo.devaptika.web.id/assets/cryptodash/assets/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="https://demo.devaptika.web.id/assets/cryptodash/assets/css/responsive.css" rel="stylesheet" type="text/css" />
+    <!-- CORE CSS TEMPLATE - END -->
+
+    <script>
+        var base_url = 'https://demo.devaptika.web.id/' + "/"; // get base url without index.php
+        var site_url = 'https://demo.devaptika.web.id/index.php' + "/"; // get site url with index.php
+        var id = '';
+    </script>
+
+
+</head>
+
+<body class=" ">
+    <!-- PREMIUM TOPBAR CSS -->
+    <style>
+        .premium-topbar {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            height: 75px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        .premium-topbar .logo-wrapper {
+            display: flex;
+            align-items: center;
+            text-decoration: none !important;
+        }
+        .premium-topbar .logo-wrapper img {
+            height: 45px;
+            margin-right: 15px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+            background: #fff;
+            padding: 5px 10px;
+            border-radius: 8px;
+        }
+        .premium-topbar .logo-text {
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            text-transform: uppercase;
+        }
+        .premium-topbar .logo-text span {
+            color: #00f2fe;
+        }
+        .premium-topbar .topbar-actions .btn-premium {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        .premium-topbar .topbar-actions .btn-premium:hover {
+            background: #00f2fe;
+            color: #1a1a2e;
+            border-color: #00f2fe;
+            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.3);
+        }
+        #main-content {
+            margin-top: 75px !important; /* Push content down */
+            min-height: calc(100vh - 75px);
+        }
+        /* Mobile adjustment */
+        @media(max-width: 768px) {
+            .premium-topbar { padding: 0 15px; }
+            .premium-topbar .logo-text { display: none; }
+            .premium-topbar .topbar-actions .btn-premium span { display: none; }
+        }
+    </style>
+    <!-- START TOPBAR -->
+    <div class='premium-topbar'>
+        <a href="https://demo.devaptika.web.id/data/home" class="logo-wrapper">
+            <img src="https://demo.devaptika.web.id/assets/img/simpelpkk.png" alt="Logo Simpel PKK">
+            <h1 class="logo-text">SIMPEL <span>PKK</span></h1>
+        </a>
+        <div class='topbar-actions'>
+            <a href="https://demo.devaptika.web.id/data/home" class="btn-premium">
+                <i class="fa fa-home" style="margin-right: 6px;"></i> <span>Menu Utama</span>
+            </a>
+        </div>
+    </div>
+    <!-- END TOPBAR -->
+    <div class="page-container row-fluid container-fluid">
+        <!-- SIDEBAR - START -->
+
+        <!-- <div class="page-sidebar fixedscroll"> -->
+
+            <!-- MAIN MENU - START -->
+            <!-- <div class="page-sidebar-wrapper ps-container ps-active-y" id="main-menu-wrapper" style="height: 296px;">
+
+
+                <ul class="wraplist" style="height: auto;">
+                    <li class="menusection">Main</li>
+                    <li class="open">
+                        <a href="https://demo.devaptika.web.id/migration/statistikPenduduk">
+                            <i class="img relative crypto-ic ">
+                                <img src="https://demo.devaptika.web.id/assets/cryptodash/data/crypto-dash/icons/1.png" alt="" class="ic1 width-20">
+                            </i>
+                            <span class="title">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://demo.devaptika.web.id/migration/statistikPenduduk/penduduk">
+                            <i class="img">
+                                <img src="https://demo.devaptika.web.id/assets/cryptodash/data/crypto-dash/icons/2.png" alt="" class="width-20">
+                            </i>
+                            <span class="title">Penduduk Desa</span>
+                            <span class="label label-accent">HOT</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://demo.devaptika.web.id/migration/statistikPekerjaan">
+                            <i class="img">
+                                <img src="https://demo.devaptika.web.id/assets/cryptodash/data/crypto-dash/icons/6.png" alt="" class="width-20">
+                            </i>
+                            <span class="title">Pekerjaan</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://demo.devaptika.web.id/migration/statistikPendidikan">
+                            <i class="img">
+                                <img src="https://demo.devaptika.web.id/assets/cryptodash/data/crypto-dash/icons/4.png" alt="" class="width-20">
+                            </i>
+                            <span class="title">Pendidikan</span>
+                        </a>
+                    </li>
+
+                </ul>
+
+                <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 3px;">
+                    <div class="ps-scrollbar-x" style="left: 0px; width: 0px;"></div>
+                </div>
+                <div class="ps-scrollbar-y-rail" style="top: 0px; height: 729px; right: 3px;">
+                    <div class="ps-scrollbar-y" style="top: 0px; height: 585px;"></div>
+                </div>
+            </div> -->
+            <!-- MAIN MENU - END -->
+
+        <!-- </div> -->
+        <!--  SIDEBAR - END -->
+
+        <!-- START CONTENT -->
+        <section id="main-content" style="margin-left: 0px;" class=" ">
+            <div class="wrapper main-wrapper row" style=''>
+
+                <div class='col-xs-12'>
+    <div class="page-title">
+        <div class="pull-left">
+            <h1 class="title">Statistik - Data Umum PKK</h1>
+        </div>
+        <div class="pull-right hidden-xs">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="https://demo.devaptika.web.id/data/home"><i class="fa fa-home"></i>Data</a>
+                </li>
+                <li class="active">
+                    <strong>Data Umum PKK</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+<!-- SUMMARY CARDS -->
+<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+    <div class="tile-counter bg-primary">
+        <div class="content">
+            <h2>1.400.208</h2>
+            <div class="clearfix"></div>
+            <span>Total Kepala Keluarga (KK)</span>
+        </div>
+    </div>
+</div>
+<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+    <div class="tile-counter bg-success">
+        <div class="content">
+                        <h2>4.416.293</h2>
+            <div class="clearfix"></div>
+            <span>Total Jiwa</span>
+        </div>
+    </div>
+</div>
+<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+    <div class="tile-counter bg-warning">
+        <div class="content">
+                        <h2>48.043</h2>
+            <div class="clearfix"></div>
+            <span>Total Kader Umum</span>
+        </div>
+    </div>
+</div>
+<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+    <div class="tile-counter bg-danger">
+        <div class="content">
+                        <h2>27.774</h2>
+            <div class="clearfix"></div>
+            <span>Total Kader Khusus</span>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+<!-- CHARTS ROW -->
+<div class="col-lg-6 col-md-12 col-xs-12">
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">Distribusi Jenis Kelamin Kader</h2>
+        </header>
+        <div class="content-body" style="padding-top:15px; padding-bottom:15px;">
+            <canvas id="kaderBarChart" height="200"></canvas>
+        </div>
+    </section>
+</div>
+<div class="col-lg-6 col-md-12 col-xs-12">
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">Komposisi Penduduk Berdasarkan Gender</h2>
+        </header>
+        <div class="content-body" style="padding-top:15px; padding-bottom:15px;">
+            <canvas id="pendudukPieChart" height="200"></canvas>
+        </div>
+    </section>
+</div>
+<div class="clearfix"></div>
+
+<!-- MAIN CONTENT AREA STARTS -->
+<div class="col-lg-12">
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">Tabel Data Umum PKK Tingkat Kecamatan</h2>
+        </header>
+        <div class="content-body">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive" data-pattern="priority-columns">
+                        <table id="pkk-umum" class="table vm trans table-small-font no-mb table-striped">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2">Nama Kecamatan</th>
+                                    <th colspan="3">Jumlah Kelompok</th>
+                                    <th colspan="2">Jumlah KK</th>
+                                    <th colspan="2">Jumlah Jiwa</th>
+                                    <th colspan="2">Anggota TP PKK</th>
+                                    <th colspan="2">Kader PKK Umum</th>
+                                    <th colspan="2">Kader PKK Khusus</th>
+                                </tr>
+                                <tr>
+                                    <th>PKK RW</th>
+                                    <th>PKK RT</th>
+                                    <th>DASA WISMA</th>
+                                    <th>KRT</th>
+                                    <th>KK</th>
+                                    <th>L</th>
+                                    <th>P</th>
+                                    <th>L</th>
+                                    <th>P</th>
+                                    <th>L</th>
+                                    <th>P</th>
+                                    <th>L</th>
+                                    <th>P</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Scripts for Charts and DataTables -->
+<script src="https://demo.devaptika.web.id/assets/cryptodash/assets/plugins/chartjs-chart/Chart.min.js"></script>
+<script>
+window.addEventListener('load', function() {
+    // Initialize DataTables omitted to prevent duplication
+
+    // 2. Initialize Chart.js v1 Bar Chart (Kader)
+    var ctxBar = document.getElementById("kaderBarChart").getContext("2d");
+    var barChartData = {
+        labels: ["Anggota TP PKK", "Kader Umum", "Kader Khusus"],
+        datasets: [
+            {
+                label: 'Laki-laki',
+                fillColor: 'rgba(54, 162, 235, 0.7)',
+                strokeColor: 'rgba(54, 162, 235, 1)',
+                highlightFill: 'rgba(54, 162, 235, 0.9)',
+                data: [
+                    703,
+                    1680,
+                    136                ]
+            },
+            {
+                label: 'Perempuan',
+                fillColor: 'rgba(255, 99, 132, 0.7)',
+                strokeColor: 'rgba(255,99,132,1)',
+                highlightFill: 'rgba(255, 99, 132, 0.9)',
+                data: [
+                    8829,
+                    46363,
+                    27638                ]
+            }
+        ]
+    };
+    new Chart(ctxBar).Bar(barChartData, { responsive: true });
+
+    // 3. Initialize Chart.js v1 Pie Chart (Penduduk)
+    var ctxPie = document.getElementById("pendudukPieChart").getContext("2d");
+    var pieData = [
+        {
+            value: 2232233,
+            color: "#36A2EB",
+            highlight: "#42A5F5",
+            label: "Laki-laki"
+        },
+        {
+            value: 2184060,
+            color: "#FF6384",
+            highlight: "#EF5350",
+            label: "Perempuan"
+        }
+    ];
+    new Chart(ctxPie).Pie(pieData, { responsive: true });
+});
+</script>
+                <!-- MAIN CONTENT AREA ENDS -->
+            </div>
+        </section>
+        <!-- END CONTENT -->
+    </div>
+
+
+
+
+
+
+        <!-- END CONTAINER -->
+        <!-- LOAD FILES AT PAGE END FOR FASTER LOADING -->
+
+        <!-- CORE JS FRAMEWORK - START -->
+
+        <!-- <script src="https://demo.devaptika.web.id/assets/js/jquery-3.1.1.min.js"></script> -->
+        <script src="https://demo.devaptika.web.id/assets/cryptodash/assets/plugins/swiper/jquery.min.js"></script>
+
+        <!-- <script src="https://demo.devaptika.web.id/assets/cryptodash/assets/js/jquery-1.11.2.min.js"></script> -->
+        <script src="https://demo.devaptika.web.id/assets/cryptodash/assets/js/jquery.easing.min.js"></script>
+        <script src="https://demo.devaptika.web.id/assets/cryptodash/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+        <script src="https://demo.devaptika.web.id/assets/cryptodash/assets/plugins/pace/pace.min.js"></script>
+        <script src="https://demo.devaptika.web.id/assets/cryptodash/assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+        <script src="https://demo.devaptika.web.id/assets/cryptodash/assets/plugins/viewport/viewportchecker.js"></script>
+        <!-- <script>
+window.jQuery || document.write('<script src="https://demo.devaptika.web.id/assets/cryptodash/assets/js/jquery-1.11.2.min.js"><\/script>');
+</script> -->
+        <!-- CORE JS FRAMEWORK - END -->
+
+        <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START -->
+
+        <script src="https://demo.devaptika.web.id/assets/cryptodash/assets/plugins/chartjs-chart/Chart.min.js"></script>
+        <script src="https://demo.devaptika.web.id/assets/cryptodash/assets/plugins/syotimer/jquery.syotimer.min.js"></script>
+        <script src="https://demo.devaptika.web.id/assets/cryptodash/assets/js/syotimer-ini.js"></script>
+        <script src="https://demo.devaptika.web.id/assets/cryptodash/assets/js/dashboard-crypto.js"></script>
+        <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END -->
+        <script src="https://demo.devaptika.web.id/assets/bower_components/select2/dist/js/select2.min.js"></script>
+
+
+        
+		<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+		<script src="https://demo.devaptika.web.id/assets/js/app/data/umum/index.js"></script>
+
+        <!-- CORE TEMPLATE JS - START -->
+        <!-- <script src="https://demo.devaptika.web.id/assets/cryptodash/assets/js/scripts.js"></script> -->
+        <!-- END CORE TEMPLATE JS - END -->
+         
+</body>
+
+</html>

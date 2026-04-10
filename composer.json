@@ -1,0 +1,21 @@
+{
+    "name": "ardissoebrata/ci-beam",
+    "description": "CodeIgniter Bootstrap",
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "php": ">=5.2.4",
+        "codeigniter/framework": "3.*",
+        "zendframework/zend-permissions-acl": "*",
+        "jenssegers/date": "*",
+        "phpoffice/phpspreadsheet": "1.28.*"
+    },
+    "require-dev": {
+        "kenjis/ci-phpunit-test": "^0.11.0"
+    },
+    "scripts": {
+        "post-create-project-cmd": [
+            "cd assets && bower install && cd .."
+        ]
+    }
+}

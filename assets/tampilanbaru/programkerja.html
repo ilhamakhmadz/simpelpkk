@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+    <title>SIMPEL PKK | Kabupaten Bandung - Bangkit, Edukatif, Dinamis, Agamis, Sejahtera</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    
+    <!-- Icons & Animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    },
+                    colors: {
+                        pkk: {
+                            navy: '#001A33',
+                            blue: '#005AAA',
+                            tosca: '#008A8A',
+                            emerald: '#006B6B',
+                            gold: '#D4AF37',
+                            brightGreen: '#4ADE80',
+                            light: '#F8FAFC',
+                            darkBg: '#0F172A',
+                            darkCard: '#1E293B'
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 20px 40px -15px rgba(0,0,0,0.05)',
+                        'premium': '0 25px 50px -12px rgba(0, 138, 138, 0.15)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #008A8A; border-radius: 10px; }
+
+        .hero-slide {
+            opacity: 0;
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: absolute;
+            inset: 0;
+            transform: scale(1.1);
+        }
+        .hero-slide.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+        }
+        .dark .glass-nav {
+            background: rgba(15, 23, 42, 0.8);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #008A8A, #005AAA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Gradient Request: Tosca to Bright Green */
+        .text-gradient-hero {
+            background: linear-gradient(to right, #008A8A, #4ADE80);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Dark mode transition */
+        body { transition: background-color 0.3s, color 0.3s; }
+    </style>
+</head>
+
+<body class="bg-pkk-light text-gray-900 dark:bg-pkk-darkBg dark:text-gray-100 overflow-x-hidden">
+
+<!-- Navbar -->
+<nav class="fixed top-0 left-0 w-full z-50 transition-all duration-500 glass-nav border-b border-white/20" id="navbar">
+    
+    <!-- CONTAINER -->
+    <div class="w-full lg:max-w-7xl lg:mx-auto px-4 sm:px-6">
+        
+        <div class="flex justify-between items-center h-20">
+
+            <!-- Brand -->
+            <div class="flex items-center gap-2 flex-shrink-0 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                
+                <img src="assets/images/logo.png" 
+                     class="w-9 h-9 md:w-12 md:h-12 object-contain">
+
+                <div class="leading-tight">
+                    <span class="block font-extrabold text-sm md:text-lg text-pkk-navy dark:text-white">
+                        SIMPEL <span class="text-pkk-tosca">PKK</span>
+                    </span>
+                    <span class="text-[8px] md:text-[10px] font-bold text-pkk-blue dark:text-pkk-brightGreen uppercase">
+                        KAB. BANDUNG
+                    </span>
+                </div>
+            </div>
+
+            <!-- Desktop Nav -->
+            <div class="hidden lg:flex items-center gap-2">
+
+                <!-- Beranda -->
+                <a href="index.html" class="px-4 py-2 text-sm font-bold text-pkk-tosca bg-pkk-tosca/5 rounded-full">
+                    Beranda
+                </a>
+
+                <!-- Profil -->
+                <div class="relative group">
+                    <button class="px-4 py-2 text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-pkk-tosca flex items-center gap-1">
+                        Profil <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </button>
+
+                    <div class="absolute top-full left-0 mt-2 w-64 bg-white dark:bg-pkk-darkCard rounded-2xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-4 space-y-2">
+                        <a href="sejarah.html" class="block px-4 py-2 rounded-lg hover:bg-pkk-tosca/10">Sejarah</a>
+                        <a href="tupoksi.html" class="block px-4 py-2 rounded-lg hover:bg-pkk-tosca/10">Tugas Pokok dan Fungsi</a>
+                        <a href="visimisi.html" class="block px-4 py-2 rounded-lg hover:bg-pkk-tosca/10">Visi & Misi</a>
+                        <a href="strukturorg.html" class="block px-4 py-2 rounded-lg hover:bg-pkk-tosca/10">Struktur Organisasi</a>
+                    </div>
+                </div>
+
+                <!-- Program -->
+                <div class="relative group">
+                    <button class="px-4 py-2 text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-pkk-tosca flex items-center gap-1">
+                        Program <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </button>
+
+                    <div class="absolute top-full left-0 mt-2 w-64 bg-white dark:bg-pkk-darkCard rounded-2xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-4 space-y-2">
+                        <a href="programkerja.html" class="block px-4 py-2 rounded-lg hover:bg-pkk-tosca/10">Program Kerja</a>
+                        <a href="galeri.html" class="block px-4 py-2 rounded-lg hover:bg-pkk-tosca/10">Galeri Kegiatan</a>
+                    </div>
+                </div>
+
+                <!-- Berita -->
+                <a href="#berita" class="px-4 py-2 text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-pkk-tosca">
+                    Berita
+                </a>
+                
+                <div class="h-6 w-[1px] bg-gray-200 dark:bg-gray-700 mx-4"></div>
+
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-pkk-navy dark:text-pkk-brightGreen">
+                    <i id="theme-toggle-icon" class="fa-solid fa-moon text-lg"></i>
+                </button>
+
+                <!-- Login -->
+                <a href="login.html" class="bg-pkk-navy dark:bg-pkk-blue text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg flex items-center gap-2">
+                    <i class="fa-solid fa-fingerprint"></i> Login
+                </a>
+            </div>
+
+            <!-- MOBILE NAV (FIX POSISI) -->
+            <div class="lg:hidden flex items-center gap-2 ml-auto pr-1 flex-shrink-0">
+
+                <!-- Dark Mode -->
+                <button id="theme-toggle-mobile" 
+                    class="p-2 rounded-full text-pkk-navy dark:text-pkk-brightGreen">
+                    <i class="fa-solid fa-moon text-lg"></i>
+                </button>
+
+                <!-- Menu -->
+                <button id="mobile-btn"
+                    class="p-2 rounded-full text-pkk-navy dark:text-white">
+                    <i class="fa-solid fa-bars-staggered text-xl"></i>
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+
+<!-- HERO -->
+<section class="relative pt-40 pb-32 bg-pkk-navy text-white overflow-hidden">
+
+    <div class="absolute inset-0 z-0">
+        <img src="#"
+             class="w-full h-full object-cover opacity-30 transform scale-105 motion-safe:animate-[pulse_8s_ease-in-out_infinite]">
+        
+        <div class="absolute inset-0 bg-gradient-to-b from-pkk-navy via-pkk-navy/60 to-pkk-navy/90"></div>
+        
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-pkk-tosca/10 via-transparent to-transparent"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 text-center">
+        
+        <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-full mb-8 backdrop-blur-md" data-aos="fade-down">
+            <i class="fa-solid fa-layer-group text-pkk-brightGreen text-xs"></i>
+            <span class="text-[10px] font-bold tracking-[0.3em] uppercase opacity-80">Informasi Terpadu</span>
+        </div>
+
+        <h1 class="text-5xl md:text-7xl font-black mb-8 leading-tight tracking-tight" data-aos="fade-up">
+            Program Kerja <span class="text-gradient-hero italic font-serif">PKK</span>
+        </h1>
+
+        <p class="text-gray-300 max-w-2xl mx-auto text-lg md:text-xl leading-relaxed font-medium opacity-90" data-aos="fade-up" data-aos-delay="200">
+            Sinergi <span class="text-white font-bold">10 Program Pokok PKK</span> sebagai pilar utama gerakan pemberdayaan keluarga menuju masyarakat Kabupaten Bandung yang mandiri.
+        </p>
+
+        <div class="flex justify-center items-center gap-4 mt-12" data-aos="zoom-in" data-aos-delay="400">
+            <div class="h-[1px] w-12 bg-gradient-to-r from-transparent to-pkk-tosca"></div>
+            <div class="w-2 h-2 rounded-full bg-pkk-brightGreen animate-ping"></div>
+            <div class="h-[1px] w-12 bg-gradient-to-l from-transparent to-pkk-tosca"></div>
+        </div>
+    </div>
+
+    <div class="absolute bottom-0 left-0 w-full leading-[0] overflow-hidden">
+        <svg class="relative block w-full h-[60px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.43,147.69,126.35,221.39,112.42c58-10.79,114.16-30.13,172-41.86Z" 
+                  class="fill-white dark:fill-pkk-darkBg transition-colors duration-300"></path>
+        </svg>
+    </div>
+</section>
+<section class="py-24 bg-pkk-light dark:bg-pkk-darkBg relative overflow-hidden">
+    <div class="absolute top-0 left-0 w-64 h-64 bg-pkk-tosca/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-pkk-blue/5 rounded-full blur-3xl translate-x-1/3 translate-y-1/3"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+
+        <div class="text-center max-w-3xl mx-auto mb-20" data-aos="fade-up">
+            <h4 class="text-pkk-tosca dark:text-pkk-brightGreen font-bold tracking-[0.3em] uppercase text-xs mb-4">
+                Pilar Gerakan
+            </h4>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-pkk-navy dark:text-white mb-6 leading-tight">
+                10 Program Pokok <span class="text-gradient">PKK</span>
+            </h2>
+            <p class="text-gray-500 dark:text-gray-400 text-lg leading-relaxed font-medium">
+                Landasan strategis dalam mewujudkan keluarga sejahtera melalui pemberdayaan masyarakat yang terukur dan berkelanjutan di Kabupaten Bandung.
+            </p>
+            <div class="flex justify-center mt-6">
+                <div class="w-16 h-1.5 bg-pkk-tosca rounded-full"></div>
+                <div class="w-4 h-1.5 bg-pkk-brightGreen rounded-full mx-2"></div>
+                <div class="w-16 h-1.5 bg-pkk-blue rounded-full"></div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <div class="group relative p-1 rounded-[2.5rem] transition-all duration-500 hover:-translate-y-3" data-aos="fade-up">
+                <div class="absolute inset-0 bg-gradient-to-br from-pkk-tosca to-pkk-blue opacity-0 group-hover:opacity-100 rounded-[2.5rem] transition-opacity duration-500"></div>
+                <div class="relative bg-white dark:bg-pkk-darkCard p-8 rounded-[2.4rem] shadow-soft h-full border border-gray-100 dark:border-white/5 flex flex-col items-start transition-all group-hover:bg-white/95 dark:group-hover:bg-pkk-darkCard/90">
+                    <div class="w-16 h-16 rounded-2xl bg-pkk-tosca/10 dark:bg-pkk-tosca/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
+                        <i class="fa-solid fa-scale-balanced text-pkk-tosca text-3xl"></i>
+                    </div>
+                    <span class="text-pkk-navy/10 dark:text-white/5 font-black text-6xl absolute top-6 right-8 group-hover:text-pkk-tosca/20 transition-colors">01</span>
+                    <h3 class="font-extrabold text-xl text-pkk-navy dark:text-white mb-3">Penghayatan dan Pengamalan Pancasila</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Menanamkan nilai-nilai luhur bangsa sebagai fondasi moral keluarga yang kuat.</p>
+                </div>
+            </div>
+
+            <div class="group relative p-1 rounded-[2.5rem] transition-all duration-500 hover:-translate-y-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="absolute inset-0 bg-gradient-to-br from-pkk-tosca to-pkk-blue opacity-0 group-hover:opacity-100 rounded-[2.5rem] transition-opacity duration-500"></div>
+                <div class="relative bg-white dark:bg-pkk-darkCard p-8 rounded-[2.4rem] shadow-soft h-full border border-gray-100 dark:border-white/5 flex flex-col items-start transition-all group-hover:bg-white/95 dark:group-hover:bg-pkk-darkCard/90">
+                    <div class="w-16 h-16 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-people-group text-blue-500 text-3xl"></i>
+                    </div>
+                    <span class="text-pkk-navy/10 dark:text-white/5 font-black text-6xl absolute top-6 right-8">02</span>
+                    <h3 class="font-extrabold text-xl text-pkk-navy dark:text-white mb-3">Gotong Royong</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Menumbuhkan kepedulian dan kerja sama aktif dalam kehidupan bermasyarakat.</p>
+                </div>
+            </div>
+
+            <div class="group relative p-1 rounded-[2.5rem] transition-all duration-500 hover:-translate-y-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="absolute inset-0 bg-gradient-to-br from-pkk-tosca to-pkk-blue opacity-0 group-hover:opacity-100 rounded-[2.5rem] transition-opacity duration-500"></div>
+                <div class="relative bg-white dark:bg-pkk-darkCard p-8 rounded-[2.4rem] shadow-soft h-full border border-gray-100 dark:border-white/5 flex flex-col items-start transition-all group-hover:bg-white/95 dark:group-hover:bg-pkk-darkCard/90">
+                    <div class="w-16 h-16 rounded-2xl bg-orange-500/10 flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-bowl-rice text-orange-500 text-3xl"></i>
+                    </div>
+                    <span class="text-pkk-navy/10 dark:text-white/5 font-black text-6xl absolute top-6 right-8">03</span>
+                    <h3 class="font-extrabold text-xl text-pkk-navy dark:text-white mb-3">Pangan</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Ketahanan pangan keluarga melalui pemanfaatan lahan dan gizi seimbang.</p>
+                </div>
+            </div>
+
+            <div class="group relative p-1 rounded-[2.5rem] transition-all duration-500 hover:-translate-y-3" data-aos="fade-up">
+                <div class="absolute inset-0 bg-gradient-to-br from-pkk-tosca to-pkk-blue opacity-0 group-hover:opacity-100 rounded-[2.5rem] transition-opacity duration-500"></div>
+                <div class="relative bg-white dark:bg-pkk-darkCard p-8 rounded-[2.4rem] shadow-soft h-full border border-gray-100 dark:border-white/5 flex flex-col items-start transition-all group-hover:bg-white/95 dark:group-hover:bg-pkk-darkCard/90">
+                    <div class="w-16 h-16 rounded-2xl bg-pink-500/10 flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-shirt text-pink-500 text-3xl"></i>
+                    </div>
+                    <span class="text-pkk-navy/10 dark:text-white/5 font-black text-6xl absolute top-6 right-8">04</span>
+                    <h3 class="font-extrabold text-xl text-pkk-navy dark:text-white mb-3">Sandang</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Membudayakan perilaku berpakaian yang pantas, rapi, dan mencintai produk lokal.</p>
+                </div>
+            </div>
+
+            <div class="group relative p-1 rounded-[2.5rem] transition-all duration-500 hover:-translate-y-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="absolute inset-0 bg-gradient-to-br from-pkk-tosca to-pkk-blue opacity-0 group-hover:opacity-100 rounded-[2.5rem] transition-opacity duration-500"></div>
+                <div class="relative bg-white dark:bg-pkk-darkCard p-8 rounded-[2.4rem] shadow-soft h-full border border-gray-100 dark:border-white/5 flex flex-col items-start transition-all group-hover:bg-white/95 dark:group-hover:bg-pkk-darkCard/90">
+                    <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-house-circle-check text-cyan-500 text-3xl"></i>
+                    </div>
+                    <span class="text-pkk-navy/10 dark:text-white/5 font-black text-6xl absolute top-6 right-8">05</span>
+                    <h3 class="font-extrabold text-xl text-pkk-navy dark:text-white mb-3">Perumahan & Tata Laksana RT</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Mewujudkan rumah sehat dan pengelolaan manajemen rumah tangga yang efektif.</p>
+                </div>
+            </div>
+
+            <div class="group relative p-1 rounded-[2.5rem] transition-all duration-500 hover:-translate-y-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="absolute inset-0 bg-gradient-to-br from-pkk-tosca to-pkk-blue opacity-0 group-hover:opacity-100 rounded-[2.5rem] transition-opacity duration-500"></div>
+                <div class="relative bg-white dark:bg-pkk-darkCard p-8 rounded-[2.4rem] shadow-soft h-full border border-gray-100 dark:border-white/5 flex flex-col items-start transition-all group-hover:bg-white/95 dark:group-hover:bg-pkk-darkCard/90">
+                    <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-graduation-cap text-emerald-500 text-3xl"></i>
+                    </div>
+                    <span class="text-pkk-navy/10 dark:text-white/5 font-black text-6xl absolute top-6 right-8">06</span>
+                    <h3 class="font-extrabold text-xl text-pkk-navy dark:text-white mb-3">Pendidikan & Keterampilan</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Meningkatkan kecerdasan dan keahlian warga melalui pelatihan berkelanjutan.</p>
+                </div>
+            </div>
+
+            <div class="group relative p-1 rounded-[2.5rem] transition-all duration-500 hover:-translate-y-3" data-aos="fade-up">
+                <div class="absolute inset-0 bg-gradient-to-br from-pkk-tosca to-pkk-blue opacity-0 group-hover:opacity-100 rounded-[2.5rem] transition-opacity duration-500"></div>
+                <div class="relative bg-white dark:bg-pkk-darkCard p-8 rounded-[2.4rem] shadow-soft h-full border border-gray-100 dark:border-white/5 flex flex-col items-start transition-all group-hover:bg-white/95 dark:group-hover:bg-pkk-darkCard/90">
+                    <div class="w-16 h-16 rounded-2xl bg-red-500/10 flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-heart-pulse text-red-500 text-3xl"></i>
+                    </div>
+                    <span class="text-pkk-navy/10 dark:text-white/5 font-black text-6xl absolute top-6 right-8">07</span>
+                    <h3 class="font-extrabold text-xl text-pkk-navy dark:text-white mb-3">Kesehatan</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Meningkatkan derajat kesehatan keluarga melalui perilaku hidup bersih dan sehat.</p>
+                </div>
+            </div>
+
+            <div class="group relative p-1 rounded-[2.5rem] transition-all duration-500 hover:-translate-y-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="absolute inset-0 bg-gradient-to-br from-pkk-tosca to-pkk-blue opacity-0 group-hover:opacity-100 rounded-[2.5rem] transition-opacity duration-500"></div>
+                <div class="relative bg-white dark:bg-pkk-darkCard p-8 rounded-[2.4rem] shadow-soft h-full border border-gray-100 dark:border-white/5 flex flex-col items-start transition-all group-hover:bg-white/95 dark:group-hover:bg-pkk-darkCard/90">
+                    <div class="w-16 h-16 rounded-2xl bg-yellow-500/10 flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-handshake-angle text-yellow-600 text-3xl"></i>
+                    </div>
+                    <span class="text-pkk-navy/10 dark:text-white/5 font-black text-6xl absolute top-6 right-8">08</span>
+                    <h3 class="font-extrabold text-xl text-pkk-navy dark:text-white mb-3">Kehidupan Berkoperasi</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Pemberdayaan ekonomi keluarga melalui penguatan simpul koperasi lokal.</p>
+                </div>
+            </div>
+
+            <div class="group relative p-1 rounded-[2.5rem] transition-all duration-500 hover:-translate-y-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="absolute inset-0 bg-gradient-to-br from-pkk-tosca to-pkk-blue opacity-0 group-hover:opacity-100 rounded-[2.5rem] transition-opacity duration-500"></div>
+                <div class="relative bg-white dark:bg-pkk-darkCard p-8 rounded-[2.4rem] shadow-soft h-full border border-gray-100 dark:border-white/5 flex flex-col items-start transition-all group-hover:bg-white/95 dark:group-hover:bg-pkk-darkCard/90">
+                    <div class="w-16 h-16 rounded-2xl bg-green-500/10 flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-leaf text-green-600 text-3xl"></i>
+                    </div>
+                    <span class="text-pkk-navy/10 dark:text-white/5 font-black text-6xl absolute top-6 right-8">09</span>
+                    <h3 class="font-extrabold text-xl text-pkk-navy dark:text-white mb-3">Kelestarian Lingkungan</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Menjaga kebersihan dan kelestarian alam lingkungan sekitar tempat tinggal.</p>
+                </div>
+            </div>
+
+            <div class="group relative p-1 rounded-[2.5rem] transition-all duration-500 hover:-translate-y-3 lg:col-start-2" data-aos="fade-up">
+                <div class="absolute inset-0 bg-gradient-to-br from-pkk-tosca to-pkk-blue opacity-0 group-hover:opacity-100 rounded-[2.5rem] transition-opacity duration-500"></div>
+                <div class="relative bg-white dark:bg-pkk-darkCard p-8 rounded-[2.4rem] shadow-soft h-full border border-gray-100 dark:border-white/5 flex flex-col items-start transition-all group-hover:bg-white/95 dark:group-hover:bg-pkk-darkCard/90">
+                    <div class="w-16 h-16 rounded-2xl bg-indigo-500/10 flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-calendar-check text-indigo-500 text-3xl"></i>
+                    </div>
+                    <span class="text-pkk-navy/10 dark:text-white/5 font-black text-6xl absolute top-6 right-8">10</span>
+                    <h3 class="font-extrabold text-xl text-pkk-navy dark:text-white mb-3">Perencanaan Sehat</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Membudayakan perencanaan dalam aspek kesehatan dan kesejahteraan finansial.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+ <!-- Footer -->
+    <footer class="bg-pkk-navy text-white pt-24 pb-12 relative">
+    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-pkk-tosca to-pkk-brightGreen"></div>
+    
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
+
+            <!-- BRAND -->
+            <div class="lg:col-span-2">
+                <div class="flex items-center gap-4 mb-8">
+
+                    <!-- LOGO LOKAL -->
+                    <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center p-2">
+                        <img src="assets/images/logo.png" class="w-full h-full object-contain">
+                    </div>
+
+                    <div>
+                        <h2 class="text-2xl font-extrabold tracking-tight">SIMPEL PKK</h2>
+                        <p class="text-[10px] font-bold text-pkk-brightGreen tracking-[0.3em] uppercase">
+                            Kabupaten Bandung
+                        </p>
+                    </div>
+                </div>
+
+                <p class="text-white/60 max-w-sm leading-relaxed mb-10">
+                    Platform pusat pelaporan dan informasi terintegrasi Tim Penggerak PKK Kabupaten Bandung. 
+                    Memberdayakan keluarga, memajukan bangsa.
+                </p>
+
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-pkk-tosca transition-all">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-pkk-blue transition-all">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-red-600 transition-all">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- NAVIGASI -->
+            <div>
+                <h3 class="text-lg font-bold mb-6">Navigasi</h3>
+                <ul class="space-y-4 text-white/50 text-sm">
+                    <li><a href="#" class="hover:text-pkk-brightGreen transition">Beranda</a></li>
+                    <li><a href="#sambutan" class="hover:text-pkk-brightGreen transition">Profil</a></li>
+                    <li><a href="#data-pkk" class="hover:text-pkk-brightGreen transition">Program Kerjas</a></li>
+                    <li><a href="#berita" class="hover:text-pkk-brightGreen transition">Berita Terkini</a></li>
+                </ul>
+            </div>
+
+            <!-- KONTAK -->
+            <div>
+                <h3 class="text-lg font-bold mb-6">Kontak</h3>
+                <div class="text-white/50 text-sm space-y-4">
+                    <div class="flex gap-3">
+                        <i class="fa-solid fa-location-dot text-pkk-brightGreen"></i>
+                        <p>Jl. Raya Soreang Km. 17, Soreang, Jawa Barat 40911</p>
+                    </div>
+                    <div class="flex gap-3">
+                        <i class="fa-solid fa-envelope text-pkk-brightGreen"></i>
+                        <p>pkk@bandungkab.go.id</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- BOTTOM -->
+        <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+            <p class="text-[10px] text-white/30 uppercase tracking-widest">
+                &copy; 2026 TP PKK Kabupaten Bandung. Seluruh Hak Cipta Dilindungi.
+            </p>
+
+            <div class="flex items-center gap-2">
+                <span class="text-[10px] font-bold text-white/20 uppercase">Created By:</span>
+                <span class="bg-white/5 px-4 py-1 rounded-full text-[10px] font-bold text-pkk-gold">
+                    DISKOMINFO Kab. Bandung
+                </span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        // Theme Toggle Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleBtnMobile = document.getElementById('theme-toggle-mobile');
+        const themeToggleIcon = document.getElementById('theme-toggle-icon');
+        const html = document.documentElement;
+
+        function toggleTheme() {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                themeToggleIcon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                themeToggleIcon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Init theme from localStorage
+        if (localStorage.getItem('theme') === 'dark') {
+            html.classList.add('dark');
+            themeToggleIcon.classList.replace('fa-moon', 'fa-sun');
+        }
+
+        themeToggleBtn.onclick = toggleTheme;
+        themeToggleBtnMobile.onclick = toggleTheme;
+
+        // Navbar Scroll
+        const nav = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 80) {
+                nav.classList.add('py-2', 'shadow-xl');
+            } else {
+                nav.classList.remove('py-2', 'shadow-xl');
+            }
+        });
+
+        // Hero Slider (4 Slides)
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.hero-slide');
+        setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, 5000);
+
+        // News Scroll
+        function scrollNews(dir) {
+            const container = document.getElementById('news-container');
+            const scrollAmount = container.offsetWidth * 0.8;
+            container.scrollBy({ left: dir === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+        }
+
+        // Mobile Menu
+        const btn = document.getElementById('mobile-btn');
+        const menu = document.getElementById('mobile-menu');
+        btn.onclick = () => menu.classList.toggle('hidden');
+    </script>
+</body>
+</html>

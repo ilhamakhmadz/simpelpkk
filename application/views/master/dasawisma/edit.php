@@ -1,0 +1,94 @@
+
+	<div class="row mb-12">
+		<div class="content fs-6 d-flex flex-column-fluid" id="kt_content" data-select2-id="select2-data-kt_content">
+			<!--begin::Container-->
+			<div class="container" data-select2-id="select2-data-13-guag">
+				<!--begin::Profile Account-->
+				<div class="card" data-select2-id="select2-data-12-xgkw">
+					<!--begin::Form-->
+					<form class="form d-flex flex-center" data-select2-id="select2-data-11-fnw9" id="form_edit" name="form_edit" method="post">
+						<div class="card-body mw-800px py-20" data-select2-id="select2-data-10-xs94">
+							<!--begin::Form row-->
+							<div class="row mb-8">
+								<label class="col-lg-3 form-label  fw-bolder">Pilih Kecamatan</label>
+								<div class="col-lg-9">
+
+									<input type="hidden" class="form-control form-control-lg form-control-solid" id="kec_id" name="kec_id" value="<?=$info->Kd_Kec?>" disabled>
+									<input type="text" class="form-control form-control-lg form-control-solid" id="nama_desa" name="nama_desa" value="<?=$info->Nama_Kecamatan?>" disabled>
+		
+								</div>
+							</div>
+							<!--end::Form row-->
+							<!--begin::Form row-->
+							<div class="row mb-8">
+								<label class="col-lg-3 form-label  fw-bolder required">Kode Desa</label>
+								<div class="col-lg-9">
+									<input type="hidden" class="form-control" id="id" name="id" value="<?=$info->id?>" required disabled>
+									<input type="hidden" class="form-control form-control-lg form-control-solid" id="kd_desa" name="kd_desa" value="<?=$info->Kd_Desa?>" disabled>
+									<input type="text" class="form-control form-control-lg form-control-solid" id="nama_desa" name="nama_desa" value="<?=$info->Nama_Desa?>" disabled>
+								</div>
+							</div>
+							<!--end::Form row-->
+							<!--begin::Form row-->
+							<div class="row mb-8">
+								<label class="col-lg-3 col-form-label required">Dusun</label>
+								<div class="col-lg-9">
+									<div class="input-group input-group-lg input-group-solid">
+										<input type="hidden" class="form-control form-control-lg form-control-solid" id="kd_dusun" name="kd_dusun" value="<?=$info->Kd_Dusun?>" disabled>
+										<input type="text" class="form-control form-control-lg form-control-solid" id="dusun" name="dusun" value="<?=$info->dusun?>" disabled>
+									</div>
+								</div>
+							</div>
+							<!--end::Form row-->
+							<!--begin::Form row-->
+							<div class="row mb-8">
+								<label class="col-lg-3 col-form-label required">RW</label>
+								<div class="col-lg-9">
+									<div class="input-group input-group-lg input-group-solid">
+										<input type="text" class="form-control form-control-lg form-control-solid" id="rw" name="rw" value="<?=$info->rw?>" disabled>
+									</div>
+								</div>
+							</div>
+							<!--end::Form row-->
+							<!--begin::Form row-->
+							<div class="row mb-8">
+								<label class="col-lg-3 col-form-label required">RT</label>
+								<div class="col-lg-9">
+									<div class="input-group input-group-lg input-group-solid">
+										<input type="text" class="form-control form-control-lg form-control-solid" id="rt" name="rt" value="<?=$info->rt?>" disabled>
+									</div>
+								</div>
+							</div>
+							<!--end::Form row-->
+							<!--begin::Form row-->
+							<div class="row mb-8">
+								<label class="col-lg-3 col-form-label required">Dasawisma</label>
+								<div class="col-lg-9">
+									<input type="hidden" class="form-control form-control-lg form-control" id="id" name="id" value="<?=$info->id?>" disabled>
+									<div class="input-group input-group-lg input-group">
+										<input type="text" class="form-control form-control-lg form-control" id="dasawisma" name="dasawisma" value="<?=$info->dasawisma?>" style="text-transform:uppercase" required>
+									</div>
+								</div>
+							</div>
+							<!--end::Form row-->
+
+							<!--begin::Form row-->
+							<div class="separator separator-dashed my-10"></div>
+							<!--begin::Form row-->
+							<div class="row">
+								<label class="col-lg-3 col-form-label"></label>
+								<div class="col-lg-9">
+									<button type="submit" class="btn btn-primary fw-bolder px-6 py-3 me-3">Edit</button>
+									<!-- <button type="reset" class="btn btn-color-gray-600 btn-active-light-primary fw-bolder px-6 py-3">Cancel</button> -->
+								</div>
+							</div>
+							<!--end::Form row-->
+						</div>
+					</form>
+					<!--end::Form-->
+				</div>
+				<!--end::Profile Account-->
+			</div>
+			<!--end::Container-->
+	</div>
+</div>

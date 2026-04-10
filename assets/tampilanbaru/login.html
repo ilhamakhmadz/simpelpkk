@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+    <title>Login | SIMPEL PKK Kabupaten Bandung</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
+                    colors: {
+                        pkk: {
+                            navy: '#001A33',
+                            blue: '#005AAA',
+                            tosca: '#008A8A',
+                            emerald: '#006B6B',
+                            gold: '#D4AF37',
+                            brightGreen: '#4ADE80',
+                            light: '#F8FAFC',
+                            darkBg: '#0F172A',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .animate-blob {
+            animation: blob 7s infinite;
+        }
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animation-delay-2000 { animation-delay: 2s; }
+        .animation-delay-4000 { animation-delay: 4s; }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .dark .glass {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-pkk-light dark:bg-pkk-darkBg transition-colors duration-300 font-sans overflow-hidden">
+
+    <div class="relative min-h-screen flex items-center justify-center p-4">
+        <div class="absolute top-0 -left-4 w-72 h-72 bg-pkk-tosca rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+        <div class="absolute top-0 -right-4 w-72 h-72 bg-pkk-blue rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-8 left-20 w-72 h-72 bg-pkk-brightGreen rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+
+        <div class="relative w-full max-w-md" data-aos="zoom-in" data-aos-duration="800">
+            
+            <div class="text-center mb-8">
+                <a href="index.html" class="inline-block mb-4 transition-transform hover:scale-110">
+                    <img src="assets/images/logo.png" alt="Logo" class="w-20 h-20 mx-auto drop-shadow-xl">
+                </a>
+                <h1 class="text-2xl font-extrabold text-pkk-navy dark:text-white tracking-tight">
+                    SIMPEL <span class="text-pkk-tosca">PKK</span>
+                </h1>
+                <p class="text-xs font-bold text-pkk-blue dark:text-pkk-brightGreen tracking-[0.2em] uppercase">
+                    KABUPATEN BANDUNG
+                </p>
+            </div>
+
+            <div class="glass p-8 rounded-[2.5rem] shadow-2xl relative">
+                <form action="#" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-bold text-pkk-navy dark:text-gray-300 mb-2 ml-1">Username / NIP</label>
+                        <div class="relative group">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400 group-focus-within:text-pkk-tosca transition-colors">
+                                <i class="fa-solid fa-user"></i>
+                            </span>
+                            <input type="text" placeholder="Masukkan username" 
+                                class="w-full pl-11 pr-4 py-3.5 bg-white/50 dark:bg-pkk-darkBg/50 border border-gray-200 dark:border-gray-700 rounded-2xl focus:ring-2 focus:ring-pkk-tosca focus:border-transparent outline-none transition-all dark:text-white">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-center mb-2 ml-1">
+                            <label class="text-sm font-bold text-pkk-navy dark:text-gray-300">Kata Sandi</label>
+                            <a href="#" class="text-[11px] text-pkk-tosca hover:underline font-semibold">Lupa Password?</a>
+                        </div>
+                        <div class="relative group">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400 group-focus-within:text-pkk-tosca transition-colors">
+                                <i class="fa-solid fa-lock"></i>
+                            </span>
+                            <input type="password" id="password" placeholder="••••••••" 
+                                class="w-full pl-11 pr-12 py-3.5 bg-white/50 dark:bg-pkk-darkBg/50 border border-gray-200 dark:border-gray-700 rounded-2xl focus:ring-2 focus:ring-pkk-tosca focus:border-transparent outline-none transition-all dark:text-white">
+                            <button type="button" onclick="togglePass()" class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-pkk-tosca transition-colors">
+                                <i class="fa-solid fa-eye" id="eye-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2 px-1">
+                        <input type="checkbox" id="remember" class="w-4 h-4 rounded border-gray-300 text-pkk-tosca focus:ring-pkk-tosca transition-all cursor-pointer">
+                        <label for="remember" class="text-xs text-gray-500 dark:text-gray-400 cursor-pointer select-none font-medium">Ingat saya di perangkat ini</label>
+                    </div>
+
+                    <button type="submit" 
+                        class="w-full bg-pkk-navy dark:bg-pkk-blue hover:bg-pkk-tosca dark:hover:bg-pkk-tosca text-white font-bold py-4 rounded-2xl shadow-lg shadow-pkk-blue/20 transition-all transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3">
+                        Masuk Ke Dashboard <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                    </button>
+                </form>
+
+                <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-700 text-center">
+                    <p class="text-xs text-gray-500 dark:text-gray-400">
+                        Butuh bantuan akses? <a href="#" class="text-pkk-tosca font-bold hover:underline">Hubungi Admin</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center" data-aos="fade-up" data-aos-delay="400">
+                <a href="index.html" class="inline-flex items-center gap-2 text-sm font-semibold text-gray-500 dark:text-gray-400 hover:text-pkk-tosca transition-colors">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <button onclick="toggleDarkMode()" class="fixed bottom-6 right-6 w-12 h-12 bg-white dark:bg-pkk-darkCard shadow-2xl rounded-full flex items-center justify-center text-pkk-navy dark:text-pkk-brightGreen transition-all hover:rotate-12">
+        <i class="fa-solid fa-moon text-xl" id="dark-icon"></i>
+    </button>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+
+        // Password Toggle
+        function togglePass() {
+            const passInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eye-icon');
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                eyeIcon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                passInput.type = 'password';
+                eyeIcon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        // Dark Mode Logic
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const icon = document.getElementById('dark-icon');
+            html.classList.toggle('dark');
+            if (html.classList.contains('dark')) {
+                icon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Check preference on load
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.getElementById('dark-icon').classList.replace('fa-moon', 'fa-sun');
+        }
+    </script>
+</body>
+</html>
