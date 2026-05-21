@@ -9,7 +9,9 @@ class Api_pokja3 extends MY_Controller
     }
     public function index()
     {
-        $data = $this->pokja3_model->datatables_kecamatan(1);
+        $year = $this->input->get_post('year');
+        $kec_id = $this->input->get_post('kec_id');
+        $data = $this->pokja3_model->datatables_kecamatan(1, $year, $kec_id);
         echo $data;
     }
 }

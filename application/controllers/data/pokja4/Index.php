@@ -31,11 +31,16 @@ class Index extends MY_Controller
      */
     public function index()
     {
+        $list_kecamatan = $this->db->select('Kd_Kec, Nama_Kecamatan')->from('master_kecamatan')->where('visible', 1)->order_by('Nama_Kecamatan', 'ASC')->get()->result();
+        $list_tahun = $this->db->select('DISTINCT(date_year) as tahun')->from('pkk')->where('date_year IS NOT NULL')->where('date_year !=', 0)->order_by('date_year', 'DESC')->get()->result();
+
         $this->load->vars(array(
             'page_title' => 'Data Profil PKK',
             'page_icon' => '<a class="btn btn-active-accent fw-bolder" href="' . site_url('desa/profil/add') . '"> <i class="fa fa-plus"></i> Tambah Data</a>',
             'url_home' => '<li class="breadcrumb-item"><a href="' . base_url('dashboard/home') . '" class="text-muted text-hover-primary">Home</a></li>',
             'url_page' => '<li class="breadcrumb-item text-dark">Profil PKK</li>',
+            'list_kecamatan' => $list_kecamatan,
+            'list_tahun' => $list_tahun,
         ));
 
         $this->template

@@ -7,6 +7,38 @@
 </div>
 <div class="clearfix"></div>
 
+<!-- FILTER CONTAINER -->
+<div class="col-xs-12" style="margin-bottom: 20px;">
+    <div class="box" style="border: 1px solid #e5e5e5; border-radius: 8px; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-bottom: 0;">
+        <div class="content-body" style="padding: 15px 20px;">
+            <form id="filter-form" class="form-inline">
+                <div class="form-group" style="margin-right: 25px; margin-bottom: 0;">
+                    <label for="filter_kecamatan" style="font-weight: bold; margin-right: 10px; color: #444; font-size: 14px;">Kecamatan:</label>
+                    <select id="filter_kecamatan" name="kec_id" class="form-control select2" style="min-width: 250px;">
+                        <option value="">Semua Kecamatan</option>
+                        <?php foreach($list_kecamatan as $kec): ?>
+                            <option value="<?= $kec->Kd_Kec ?>"><?= htmlspecialchars($kec->Nama_Kecamatan) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-right: 25px; margin-bottom: 0;">
+                    <label for="filter_tahun" style="font-weight: bold; margin-right: 10px; color: #444; font-size: 14px;">Tahun:</label>
+                    <select id="filter_tahun" name="year" class="form-control" style="min-width: 150px; height: 34px;">
+                        <option value="">Semua Tahun</option>
+                        <?php foreach($list_tahun as $thn): ?>
+                            <option value="<?= $thn->tahun ?>"><?= $thn->tahun ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="font-weight: bold; padding: 6px 20px; border-radius: 4px; height: 34px; margin-bottom: 0;">
+                    <i class="fa fa-filter"></i> Filter
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+
 <!-- SUMMARY CARDS -->
 <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
     <div class="tile-counter bg-primary">
@@ -122,11 +154,18 @@
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    fetch('<?= base_url('index.php/api/data/Api_umum') ?>')
+function loadData(year = '', kecId = '') {
+    // Show spinner in cards
+    document.getElementById('total_kk').innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+    document.getElementById('total_jiwa').innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+    document.getElementById('total_kader_umum').innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+    document.getElementById('total_kader_khusus').innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+
+    let url = '<?= base_url('index.php/api/data/Api_umum') ?>' + '?year=' + year + '&kec_id=' + kecId;
+    fetch(url)
     .then(res => res.json())
     .then(response => {
-        let data = response.data || [];
+        let data = Array.isArray(response) ? response : (response.data || []);
         
         // --- Aggregations ---
         let totalKK = 0;
@@ -176,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('total_kader_umum').innerText = (kaderUmumLaki + kaderUmumPerempuan).toLocaleString('id-ID');
         document.getElementById('total_kader_khusus').innerText = (kaderKhususLaki + kaderKhususPerempuan).toLocaleString('id-ID');
 
-        // Set Table
+        // Set Table (in case DataTables isn't initialized yet or needs backup)
         let tbody = document.querySelector('#pkk-umum tbody');
         if(tbody) tbody.innerHTML = tableHtml;
 
@@ -203,11 +242,14 @@ document.addEventListener("DOMContentLoaded", function() {
                     }
                 ]
             };
-            new Chart(ctxBar).Bar(barChartData, { responsive: true, maintainAspectRatio: false });
+            if (window.myBarChart) {
+                window.myBarChart.destroy();
+            }
+            window.myBarChart = new Chart(ctxBar).Bar(barChartData, { responsive: true, maintainAspectRatio: false });
 
             // 3. Pie Chart
             let ctxPie = document.getElementById("pendudukPieChart").getContext("2d");
-            let pieData = [
+            let pieData = (totalJiwaLaki + totalJiwaPerempuan) > 0 ? [
                 {
                     value: totalJiwaLaki,
                     color: "#36A2EB",
@@ -220,8 +262,13 @@ document.addEventListener("DOMContentLoaded", function() {
                     highlight: "#EF5350",
                     label: "Perempuan"
                 }
+            ] : [
+                { value: 1, color: "#EEEEEE", highlight: "#E0E0E0", label: "Belum Ada Data Penduduk" }
             ];
-            new Chart(ctxPie).Pie(pieData, { responsive: true, maintainAspectRatio: false });
+            if (window.myPieChart) {
+                window.myPieChart.destroy();
+            }
+            window.myPieChart = new Chart(ctxPie).Pie(pieData, { responsive: true, maintainAspectRatio: false });
         }
     })
     .catch(err => {
@@ -232,5 +279,25 @@ document.addEventListener("DOMContentLoaded", function() {
             spinner.innerHTML = '<p class="text-danger">Gagal memuat visualisasi API.</p>';
         }
     });
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    loadData();
+
+    // Setup filter form submit listener
+    let filterForm = document.getElementById('filter-form');
+    if (filterForm) {
+        filterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            let year = document.getElementById('filter_tahun').value;
+            let kecId = document.getElementById('filter_kecamatan').value;
+            loadData(year, kecId);
+
+            // Reload DataTable
+            if (window.the_table) {
+                window.the_table.ajax.reload();
+            }
+        });
+    }
 });
 </script>

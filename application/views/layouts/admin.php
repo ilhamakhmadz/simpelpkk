@@ -311,6 +311,19 @@ License: For each use you must have a valid license purchased only from above li
                         <div class="content fs-6 d-flex flex-column-fluid" id="kt_content">
                             <!--begin::Container-->
                             <div class="container">
+                                <?php if ($this->session->userdata('is_impersonating')): ?>
+                                    <div class="impersonate-banner bg-light-warning d-flex flex-column flex-sm-row p-5 mb-10 border border-warning shadow-sm rounded">
+                                        <span class="svg-icon svg-icon-2hx svg-icon-warning me-4 mb-5 mb-sm-0">
+                                            <i class="fa fa-user-secret fa-2x text-warning"></i>
+                                        </span>
+                                        <div class="d-flex flex-column text-dark pe-0 pe-sm-10 justify-content-center">
+                                            <span class="fs-5 fw-bold text-dark">Anda sedang login sebagai <strong><?php echo $this->session->userdata('full_name'); ?></strong> (Impersonate).</span>
+                                        </div>
+                                        <a href="<?php echo site_url('auth/login/exit_impersonate'); ?>" class="btn btn-warning fw-bolder ms-sm-auto mt-3 mt-sm-0 align-self-center text-white">
+                                            <i class="fa fa-arrow-left text-white me-2"></i> Kembali ke User Utama
+                                        </a>
+                                    </div>
+                                <?php endif; ?>
                                 <?php echo $template['content']; ?>
                             </div>
                             <!--end::Container-->

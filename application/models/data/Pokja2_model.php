@@ -67,7 +67,7 @@ class Pokja2_model extends MY_Model
         return $select;
     }
 
-    public function datatables_kecamatan($level)
+    public function datatables_kecamatan($level, $year = null, $kec_id = null)
     {        
         $this->datatables->select($this->_get_select().$this->dusun . ".dusun as nama_dusun, ");
         $this->datatables->from($this->table);
@@ -115,6 +115,13 @@ class Pokja2_model extends MY_Model
                 $this->datatables->where($this->table . '.rw', $this->session->userdata('rw'));
                 $this->datatables->where($this->table . '.rt', $this->session->userdata('rt'));
             }
+        }
+
+        if ($year !== null && $year !== '') {
+            $this->datatables->where($this->table . '.date_year', $year);
+        }
+        if ($kec_id !== null && $kec_id !== '') {
+            $this->datatables->where($this->table . '.kode_kecamatan', $kec_id);
         }
 
         $this->datatables->where($this->table . '.visible', 1);

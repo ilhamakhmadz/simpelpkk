@@ -25,10 +25,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |
 */
 $protocol = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ?  "https" : "http");
-$base_url = $protocol . "://".$_SERVER['HTTP_HOST'];
-$base_url_app = $base_url . str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
-// $config['base_url'] = 'https://pkk.bandungkab.go.id';
-$config['base_url'] = $base_url_app;
+$script_name = isset($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : '';
+$http_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
+$base_url_app = $protocol . "://" . $http_host . str_replace(basename($script_name), "", $script_name);
+if (isset($_SERVER['HTTP_HOST']) && strpos($_SERVER['HTTP_HOST'], 'pkk.bandungkab.go.id') !== false) {
+    $config['base_url'] = 'https://pkk.bandungkab.go.id/';
+} else {
+    $config['base_url'] = $base_url_app;
+}
 /*
 |--------------------------------------------------------------------------
 | Index File
@@ -398,7 +402,7 @@ $config['sess_regenerate_destroy'] = false;
 $config['cookie_prefix']	= '';
 $config['cookie_domain']	= '';
 $config['cookie_path']		= '/';
-$config['cookie_secure']	= false;
+$config['cookie_secure']	= ($protocol === 'https');
 $config['cookie_httponly'] 	= false;
 
 /*

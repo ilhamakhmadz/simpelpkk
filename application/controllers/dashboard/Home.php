@@ -17,7 +17,6 @@ class Home extends Admin_Controller
 
         $this->load->language('auth');
         $this->template
-            ->set_js(bower_url('datatables/media/js/jquery.dataTables.min'))
             ->set_js(bower_url('jquery-validation/dist/jquery.validate.min.js'));
     }
     public function index()
@@ -29,7 +28,7 @@ class Home extends Admin_Controller
         $this->load->model('desa/profil_model');
         $this->load->model('auth/user_model');
 
-        $this->load->driver('cache', array('adapter' => 'file', 'backup' => 'default'));
+        $this->load->driver('cache', array('adapter' => 'file', 'backup' => 'dummy'));
 
         $data['last_login'] = $this->user_model->last_login_users();
         $data['last_login_kec'] = $this->user_model->last_login_users_kec();
@@ -55,6 +54,7 @@ class Home extends Admin_Controller
         $this->template
             ->set_css(assets_url('admin_assets/assets/plugins/custom/datatables/datatables.bundle'))
             ->set_js(assets_url('admin_assets/assets/plugins/custom/datatables/datatables.bundle.js', true))
+            ->set_js('https://cdn.jsdelivr.net/npm/chart.js')
             ->set_js(assets_url('js/app/dashboard/home/graph.js'))
             ->set_js(assets_url('js/app/dashboard/home/index.js'))
             ->build('dashboard/index', $data);

@@ -1,74 +1,43 @@
-// var laki;
 $(document).ready(function() {
-    // $.ajax({
-    //     type: 'GET',
-    //     url: site_url + 'api/dashboard/Api_home/get_lp',
-    //     dataType: 'json',
-    //     data: { get_param: 'value' },
-    //     success: function(e) {
-    //         // var json = e;
-    //         // console.log(e.perempuan);
+    var perempuanVal = parseInt($('#perempuan').val()) || 0;
+    var lakiVal = parseInt($('#laki').val()) || 0;
 
-    //         // // $('#cand').html(data);
-    //         // $(json).each(function(i, val) {
-    //         //     $.each(val, function(k, v) {
-    //         //         // dataSet.unshift(parseInt(v));
+    var jsonfile = {
+        "jsonarray": [{
+            "perempuan": perempuanVal,
+            "laki": lakiVal
+        }]
+    };
 
-    //         //     });
-    //         // });
-    //     }
-    // });
+    var perempuan = jsonfile.jsonarray.map(function(e) {
+        return e.perempuan;
+    });
+    var laki = jsonfile.jsonarray.map(function(e) {
+        return e.laki;
+    });
 
-});
+    var ctx = document.getElementById('kt_stats_widget_1_chart');
+    if (!ctx) return;
 
-var jsonfile = {
-    "jsonarray": [{
-        "perempuan": $('#perempuan').val(),
-        "laki": $('#laki').val()
-    }]
-};
+    // Define colors
+    var primaryColor = typeof KTUtil !== 'undefined' ? KTUtil.getCssVariableValue('--bs-primary') : '#0095e8';
+    var dangerColor = typeof KTUtil !== 'undefined' ? KTUtil.getCssVariableValue('--bs-danger') : '#f1416c';
+    var successColor = typeof KTUtil !== 'undefined' ? KTUtil.getCssVariableValue('--bs-success') : '#50cd89';
+    var warningColor = typeof KTUtil !== 'undefined' ? KTUtil.getCssVariableValue('--bs-warning') : '#ffc700';
+    var infoColor = typeof KTUtil !== 'undefined' ? KTUtil.getCssVariableValue('--bs-info') : '#7239ea';
 
-var perempuan = jsonfile.jsonarray.map(function(e) {
-    return e.perempuan;
-});
-var laki = jsonfile.jsonarray.map(function(e) {
-    return e.laki;
-});;
+    // Define fonts
+    var fontFamily = typeof KTUtil !== 'undefined' ? KTUtil.getCssVariableValue('--bs-font-sans-serif') : 'Poppins';
 
-var ctx = document.getElementById('kt_stats_widget_1_chart');
+    // Chart labels
+    const labels = ['Perempuan', 'Laki-Laki'];
+    const dataSet = [perempuan, laki];
 
-// Define colors
-var primaryColor = KTUtil.getCssVariableValue('--bs-primary');
-var dangerColor = KTUtil.getCssVariableValue('--bs-danger');
-var successColor = KTUtil.getCssVariableValue('--bs-success');
-var warningColor = KTUtil.getCssVariableValue('--bs-warning');
-var infoColor = KTUtil.getCssVariableValue('--bs-info');
+    var eColor = typeof KTUtil !== 'undefined' ? KTUtil.getCssVariableValue("--bs-gray-200") : '#eff2f5',
+        aColor = typeof KTUtil !== 'undefined' ? KTUtil.getCssVariableValue("--bs-gray-800") : '#181c32';
 
-// Define fonts
-var fontFamily = KTUtil.getCssVariableValue('--bs-font-sans-serif');
-
-// Chart labels
-const labels = ['Perempuan', 'Laki-Laki'];
-
-const dataSet = [perempuan, laki];
-
-
-
-
-// Chart data
-// const data = {
-//     labels: labels,
-//     datasets: [
-//         { data: dataSet }
-//     ],
-//     backgroundColor: [
-//         KTUtil.getCssVariableValue("--bs-success"), KTUtil.getCssVariableValue("--bs-warning")
-//     ]
-// };
-var e = KTUtil.getCssVariableValue("--bs-gray-200"),
-    a = KTUtil.getCssVariableValue("--bs-gray-800");
-// Chart config
-const config = {
+    // Chart config
+    const config = {
         type: "doughnut",
         data: {
             labels: labels,
@@ -78,7 +47,6 @@ const config = {
                     successColor, warningColor
                 ]
             }],
-
         },
         options: {
             chart: {
@@ -105,8 +73,8 @@ const config = {
                 xPadding: 10,
                 caretPadding: 0,
                 displayColors: !1,
-                backgroundColor: e,
-                bodyFontColor: a,
+                backgroundColor: eColor,
+                bodyFontColor: aColor,
                 cornerRadius: 4,
                 footerSpacing: 0,
                 titleSpacing: 0
@@ -117,27 +85,7 @@ const config = {
                 }
             }
         }
-    }
-    //     type: 'pie',
-    //     data: data,
-    //     options: {
-    //         plugins: {
-    //             title: {
-    //                 display: false,
-    //             }
-    //         },
-    //         responsive: true,
-    //     },
-    //     defaults: {
-    //         global: {
-    //             defaultFont: fontFamily
-    //         }
-    //     }
-    // };
+    };
 
-
-
-// console.log(dataSet);
-
-// Init ChartJS -- for more info, please visit: https://www.chartjs.org/docs/latest/
-var myChart = new Chart(ctx, config);
+    var myChart = new Chart(ctx, config);
+});

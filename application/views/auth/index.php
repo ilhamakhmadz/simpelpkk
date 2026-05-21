@@ -139,15 +139,20 @@ $(document).ready(function() {
 					"data": "id",
 					"orderable": false,
 					"render": function(data, type, row, meta) {
-                        if(row.level_id == <?php echo $this->session->userdata('level_id') ?>){
-                            return "";
-                        }else{
-                            return '<a href="'+site_url+'auth/user/edit/' + row.id + '" class="btn btn-icon btn-light-facebook me-5 ">\n\
+                        let currentLevel = <?php echo $this->session->userdata('level_id') ?>;
+                        let actionButtons = '';
+                        
+                        if (row.level_id <= currentLevel) {
+                            return actionButtons;
+                        }
+
+                        actionButtons += '<a href="'+site_url+'auth/user/edit/' + row.id + '" title="Edit User" data-bs-toggle="tooltip" class="btn btn-icon btn-light-facebook me-5 ">\n\
                             <span class="svg-icon svg-icon-success svg-icon-2hx"><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">\n\
                                     <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "/>\n\
                                     <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"/>\n\
-                            </svg></span></a>\n\
-                            <a href="'+site_url+'auth/login/auto_login/' + row.username + '" class="btn btn-icon btn-light-twitter me-5 ">\n\
+                            </svg></span></a>\n';
+                            
+                        actionButtons += '<a href="'+site_url+'auth/login/auto_login/' + row.username + '" title="Masuk sebagai user ini" data-bs-toggle="tooltip" class="btn btn-icon btn-light-twitter me-5 ">\n\
                             <span class="svg-icon svg-icon-primary svg-icon-2hx"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">\n\
                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">\n\
                                 <rect x="0" y="0" width="24" height="24"/>\n\
@@ -156,8 +161,9 @@ $(document).ready(function() {
                                 <path d="M16.7928932,9.79289322 C17.1834175,9.40236893 17.8165825,9.40236893 18.2071068,9.79289322 C18.5976311,10.1834175 18.5976311,10.8165825 18.2071068,11.2071068 L15.2071068,14.2071068 C14.8165825,14.5976311 14.1834175,14.5976311 13.7928932,14.2071068 L10.7928932,11.2071068 C10.4023689,10.8165825 10.4023689,10.1834175 10.7928932,9.79289322 C11.1834175,9.40236893 11.8165825,9.40236893 12.2071068,9.79289322 L14.5,12.0857864 L16.7928932,9.79289322 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.500000, 12.000000) rotate(-90.000000) translate(-14.500000, -12.000000) "/>\n\
                             </g>\n\
                             </svg></span>\n\
-                            </a>\n\
-                            <a href="#" onclick="deleteItem(' + row.id + ')" class="btn btn-icon btn-light-google me-5 ">\n\
+                            </a>\n';
+                            
+                        actionButtons += '<a href="#" onclick="deleteItem(' + row.id + ')" title="Hapus User" data-bs-toggle="tooltip" class="btn btn-icon btn-light-google me-5 ">\n\
                             <span class="svg-icon svg-icon-danger svg-icon-2hx"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">\n\
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">\n\
                                     <polygon points="0 0 24 0 24 24 0 24"/>\n\
@@ -166,7 +172,8 @@ $(document).ready(function() {
                                 </g>\n\
                             </svg></span>\n\
                             </a>';
-                        }
+                            
+                        return actionButtons;
 						
 					}
 				}

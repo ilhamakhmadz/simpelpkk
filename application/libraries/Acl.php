@@ -87,6 +87,10 @@ class Acl
 		// Home page always available to all.
 		if ($resource === '')
 			return TRUE;
+
+		// Bypass for new SIP features
+		if (stripos(ltrim($resource, '/'), 'sip') === 0)
+			return TRUE;
 		
 		// Check uri_string resources from the longest segment
 		$has_resource = $this->has($resource);

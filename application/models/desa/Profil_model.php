@@ -410,11 +410,27 @@ class Profil_model extends MY_Model
     // HOME DASHBOARD
     public function get_all_penduduk()
     {
+        $year = date('Y');
         $this->db->select('SUM(jml_perempuan) as perempuan, SUM(jml_laki) as laki, SUM(jml_penduduk) as penduduk');
         $this->db->from($this->table);
         $this->db->where($this->table . '.visible', 1);
-        $this->db->where($this->table . '.date_year', date('Y'));
-        return $this->db->get()->row();
+        $this->db->where($this->table . '.date_year', $year);
+        $res = $this->db->get()->row();
+
+        if (!$res || empty($res->penduduk)) {
+            $this->db->select_max('date_year');
+            $this->db->where('visible', 1);
+            $max_y_row = $this->db->get($this->table)->row();
+            if ($max_y_row && !empty($max_y_row->date_year)) {
+                $year = $max_y_row->date_year;
+                $this->db->select('SUM(jml_perempuan) as perempuan, SUM(jml_laki) as laki, SUM(jml_penduduk) as penduduk');
+                $this->db->from($this->table);
+                $this->db->where($this->table . '.visible', 1);
+                $this->db->where($this->table . '.date_year', $year);
+                $res = $this->db->get()->row();
+            }
+        }
+        return $res;
     }
 
     public function get_lp()
@@ -427,12 +443,28 @@ class Profil_model extends MY_Model
 
     public function get_by_desa()
     {
+        $year = date('Y');
+        $this->db->select('1');
+        $this->db->from($this->table);
+        $this->db->where('visible', 1);
+        $this->db->where('date_year', $year);
+        $exists = $this->db->get()->num_rows() > 0;
+
+        if (!$exists) {
+            $this->db->select_max('date_year');
+            $this->db->where('visible', 1);
+            $max_y_row = $this->db->get($this->table)->row();
+            if ($max_y_row && !empty($max_y_row->date_year)) {
+                $year = $max_y_row->date_year;
+            }
+        }
+
         $this->db->select('Nama_Desa as nama_desa, Nama_Kecamatan as nama_kecamatan, SUM(jml_perempuan) as perempuan, SUM(jml_laki) as laki, SUM(jml_penduduk) as penduduk');
         $this->db->from($this->table);
         $this->db->join($this->kecamatan, $this->kecamatan . '.Kd_Kec = ' . $this->table . '.kode_kecamatan');
         $this->db->join($this->desa, $this->desa . '.Kd_Desa = ' . $this->table . '.kode_desa');
         $this->db->where($this->table . '.visible', 1);
-        $this->db->where($this->table . '.date_year', date('Y'));
+        $this->db->where($this->table . '.date_year', $year);
         $this->db->group_by($this->table . '.kode_desa');
         $this->db->order_by($this->table . '.kode_desa', 'DESC');
         return $this->db->get()->result();
@@ -448,11 +480,27 @@ class Profil_model extends MY_Model
 
     public function get_by_kecamatan()
     {
+        $year = date('Y');
+        $this->db->select('1');
+        $this->db->from($this->table);
+        $this->db->where('visible', 1);
+        $this->db->where('date_year', $year);
+        $exists = $this->db->get()->num_rows() > 0;
+
+        if (!$exists) {
+            $this->db->select_max('date_year');
+            $this->db->where('visible', 1);
+            $max_y_row = $this->db->get($this->table)->row();
+            if ($max_y_row && !empty($max_y_row->date_year)) {
+                $year = $max_y_row->date_year;
+            }
+        }
+
         $this->db->select('Nama_Kecamatan as nama_kecamatan, SUM(jml_perempuan) as perempuan, SUM(jml_laki) as laki, SUM(jml_penduduk) as penduduk');
         $this->db->from($this->table);
         $this->db->join($this->kecamatan, $this->kecamatan . '.Kd_Kec = ' . $this->table . '.kode_kecamatan');
         $this->db->where($this->table . '.visible', 1);
-        $this->db->where($this->table . '.date_year', date('Y'));
+        $this->db->where($this->table . '.date_year', $year);
         $this->db->group_by($this->table . '.kode_kecamatan');
         $this->db->order_by($this->table . '.kode_kecamatan', 'DESC');
         return $this->db->get()->result();

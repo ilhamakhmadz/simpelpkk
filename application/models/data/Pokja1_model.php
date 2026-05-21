@@ -51,7 +51,7 @@ class Pokja1_model extends MY_Model
         return $select;
     }
 
-    public function datatables()
+    public function datatables($year = null, $kec_id = null)
     {        
         $this->datatables->select($this->_get_select().$this->dusun . ".dusun as nama_dusun, ");
         $this->datatables->from($this->table);
@@ -60,6 +60,12 @@ class Pokja1_model extends MY_Model
         $this->datatables->join($this->dusun, $this->dusun . '.id = ' . $this->table . '.dusun', 'left');
         $this->datatables->where('level','kecamatan');
         $this->datatables->where($this->table . '.visible', 1);
+        if ($year !== null && $year !== '') {
+            $this->datatables->where($this->table . '.date_year', $year);
+        }
+        if ($kec_id !== null && $kec_id !== '') {
+            $this->datatables->where($this->table . '.kode_kecamatan', $kec_id);
+        }
         return $this->datatables->generate();
     }
 

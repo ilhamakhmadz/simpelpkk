@@ -186,6 +186,20 @@ $config['navigation'] = array(
 			)
         	
 	),
+    'sip' => array(
+        'title' => 'SIP (Posyandu)',
+        'icon' => 'fa fa-heartbeat',
+        'children' => array(
+            'sip6' => array(
+                'uri' => 'sip/sip6',
+                'title' => 'SIP 6 (Register Posyandu)'
+            ),
+            'sip7' => array(
+                'uri' => 'sip/sip7',
+                'title' => 'SIP 7 (Rekap Kegiatan)'
+            ),
+        )
+    ),
     'user-management' => array(
         'title' => 'Administrator',
         'icon' => '10.png',

@@ -8,7 +8,11 @@ $(document).ready(function() {
         stateSave: true,
         "ajax": {
             "url": site_url + 'api/data/Api_umum',
-            "type": "POST"
+            "type": "POST",
+            "data": function(d) {
+                d.year = $('#filter_tahun').val();
+                d.kec_id = $('#filter_kecamatan').val();
+            }
         },
         "columns": [{
                 "data": "Nama_Kecamatan",

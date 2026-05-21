@@ -14,9 +14,10 @@ class Api_umum extends MY_Controller
     }
     public function index()
     {
-        $data = $this->umum_model->datatables();
+        $year = $this->input->get_post('year');
+        $kec_id = $this->input->get_post('kec_id');
+        $data = $this->umum_model->datatables($year, $kec_id);
         echo $data;
-
     }
     
 }
