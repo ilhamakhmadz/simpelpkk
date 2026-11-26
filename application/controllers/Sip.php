@@ -160,172 +160,232 @@ class Sip extends Admin_Controller
     public function sip7()
     {
         $this->load->vars(array(
-            'page_title' => 'SIP 7 - Rekapitulasi Hasil Kegiatan Posyandu',
+            'page_title' => 'CATATAN DATA DAN KEGIATAN WARGA TP PKK DESA/KELURAHAN',
             'url_home' => '<li class="breadcrumb-item"><a href="' . base_url('dashboard/home') . '" class="text-muted text-hover-primary">Home</a></li>',
-            'url_page' => '<li class="breadcrumb-item text-dark">Rekapitulasi Kegiatan</li>',
+            'url_page' => '<li class="breadcrumb-item text-dark">Catatan Warga TP PKK</li>',
         ));
 
-        // Get the list of Posyandu accessible by this user to populate filters
-        $data['posyandu_list'] = $this->sip_model->get_posyandu_list();
-        $data['can_write'] = $this->sip_model->can_write();
         $data['user_level'] = $this->session->userdata('level_id');
+        $session_kec = $this->session->userdata('kec_id');
+        $session_desa = $this->session->userdata('desa_id');
 
-        // Read active filters from GET / POST
-        $data['selected_posyandu'] = $this->input->get_post('posyandu_id');
-        $data['selected_bulan'] = $this->input->get_post('bulan');
+        // Parameter filter wilayah & tahun
+        $data['selected_kec'] = $this->input->get_post('kec_id');
+        $data['selected_desa'] = $this->input->get_post('desa_id');
         $data['selected_tahun'] = $this->input->get_post('tahun');
 
-        // Apply defaults if filters are empty
-        if (empty($data['selected_posyandu']) && !empty($data['posyandu_list'])) {
-            $data['selected_posyandu'] = $data['posyandu_list'][0]->id;
-        }
-        if (empty($data['selected_bulan'])) {
-            $data['selected_bulan'] = intval(date('m'));
-        }
         if (empty($data['selected_tahun'])) {
             $data['selected_tahun'] = intval(date('Y'));
         }
 
-        // Fetch activities only if a Posyandu is selected
-        $data['activities'] = array();
-        $data['posyandu_details'] = null;
-        if (!empty($data['selected_posyandu'])) {
-            $data['posyandu_details'] = $this->sip_model->get_posyandu_by_id($data['selected_posyandu']);
-            $data['activities'] = $this->sip_model->get_activities($data['selected_posyandu'], $data['selected_bulan'], $data['selected_tahun']);
-        }
-        
-        // Data rekapitulasi berdasarkan tingkatan user
-        $data['recap_kecamatan'] = [];
-        $data['recap_desa'] = [];
-        $data['recap_dusun'] = [];
-        
-        if ($data['user_level'] <= 3) {
-            $data['recap_kecamatan'] = $this->sip_model->get_recap_sip7('kecamatan', $data['selected_bulan'], $data['selected_tahun']);
-            $data['recap_desa'] = $this->sip_model->get_recap_sip7('desa', $data['selected_bulan'], $data['selected_tahun']);
-            $data['recap_dusun'] = $this->sip_model->get_recap_sip7('dusun', $data['selected_bulan'], $data['selected_tahun']);
-        } elseif ($data['user_level'] == 4) {
-            $data['recap_desa'] = $this->sip_model->get_recap_sip7('desa', $data['selected_bulan'], $data['selected_tahun']);
-            $data['recap_dusun'] = $this->sip_model->get_recap_sip7('dusun', $data['selected_bulan'], $data['selected_tahun']);
-        } elseif ($data['user_level'] == 5) {
-            $data['recap_dusun'] = $this->sip_model->get_recap_sip7('dusun', $data['selected_bulan'], $data['selected_tahun']);
+        // Terapkan batasan level pengguna
+        if ($data['user_level'] == 3) {
+            $data['selected_kec'] = $session_kec;
+        } elseif ($data['user_level'] >= 4 && !empty($session_desa)) {
+            $data['selected_kec'] = $session_kec;
+            $data['selected_desa'] = $session_desa;
         }
 
-        // Standard list of months in Indonesian
-        $data['months'] = array(
-            1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
-            5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus',
-            9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember'
-        );
+        // Default jika admin belum memilih
+        if (empty($data['selected_kec'])) {
+            $data['selected_kec'] = '320405'; // Default Cileunyi
+        }
+        if (empty($data['selected_desa'])) {
+            // Ambil desa pertama dari kecamatan terpilih
+            $desas = $this->sip_model->get_desa_by_kecamatan($data['selected_kec']);
+            if (!empty($desas)) {
+                $data['selected_desa'] = $desas[0]->Kd_Desa;
+            }
+        }
 
-        // List of years (current year down to current year - 5)
+        // List dropdown kecamatan & desa
+        $data['kecamatan_list'] = $this->sip_model->get_all_kecamatan();
+        $data['desa_list'] = $this->sip_model->get_desa_by_kecamatan($data['selected_kec']);
+
+        // Detail info wilayah
+        $data['info_desa'] = $this->db->get_where('master_desa', array('Kd_Desa' => $data['selected_desa']))->row();
+        $data['info_kec'] = $this->db->get_where('master_kecamatan', array('Kd_Kec' => $data['selected_kec']))->row();
+
+        // Ambil data catatan warga desa ini dari tabel baru
+        $data['catatan_warga'] = [];
+        $data['master_counts'] = (object) ['jml_rw' => 0, 'jml_rt' => 0, 'jml_dasawisma' => 0];
+        if (!empty($data['selected_desa'])) {
+            $data['catatan_warga'] = $this->sip_model->get_catatan_warga_desa($data['selected_desa'], $data['selected_tahun']);
+            $data['master_counts'] = $this->sip_model->get_master_wilayah_counts($data['selected_desa']);
+        }
+
+        // List tahun
         $current_year = intval(date('Y'));
         $data['years'] = range($current_year, $current_year - 5);
 
         // Render view
         $this->template
-            ->set_js('https://cdn.jsdelivr.net/npm/chart.js') // Premium charts
+            ->set_css(assets_url('admin_assets/assets/plugins/custom/datatables/datatables.bundle'))
+            ->set_js(assets_url('admin_assets/assets/plugins/custom/datatables/datatables.bundle.js', true))
             ->build('sip/sip7', $data);
     }
 
     /**
-     * SIP 7: Save activities (RW Only)
+     * SIP 7: Get data Catatan Warga by ID via AJAX
      */
-    public function sip7_save()
+    public function sip7_get($id)
     {
-        if (!$this->sip_model->can_write()) {
-            $this->session->set_flashdata('error', 'Anda tidak memiliki hak akses untuk mencatat data kegiatan.');
-            redirect('sip/sip7');
-        }
-
-        $posyandu_id = $this->input->post('posyandu_id');
-        $bulan = $this->input->post('bulan');
-        $tahun = $this->input->post('tahun');
-
-        if (empty($posyandu_id) || empty($bulan) || empty($tahun)) {
-            $this->session->set_flashdata('error', 'Parameter tidak lengkap.');
-            redirect('sip/sip7');
-        }
-
-        // Retrieve arrays of activity values
-        $kegiatans = $this->input->post('kegiatan'); // Array of data structured by service name
-
-        $success_count = 0;
-        foreach ($kegiatans as $key => $values) {
-            $jenis_kegiatan = str_replace('_', ' ', $key);
-            $data = array(
-                'posyandu_id'    => $posyandu_id,
-                'bulan'          => intval($bulan),
-                'tahun'          => intval($tahun),
-                'jenis_kegiatan' => $jenis_kegiatan,
-                'frekuensi'      => intval($values['frekuensi']),
-                'pengunjung_l'   => intval($values['pengunjung_l']),
-                'pengunjung_p'   => intval($values['pengunjung_p']),
-                'petugas_l'      => intval($values['petugas_l']),
-                'petugas_p'      => intval($values['petugas_p']),
-                'keterangan'     => !empty($values['keterangan']) ? $values['keterangan'] : '-',
-                'visible'        => 1
-            );
-
-            if ($this->sip_model->save_kegiatan($data)) {
-                $success_count++;
-            }
-        }
-
-        if ($success_count > 0) {
-            $this->session->set_flashdata('success', 'Berhasil menyimpan ' . $success_count . ' data kegiatan posyandu.');
+        $item = $this->sip_model->get_catatan_warga_by_id($id);
+        header('Content-Type: application/json');
+        if ($item) {
+            echo json_encode(array('status' => true, 'data' => $item));
         } else {
-            $this->session->set_flashdata('error', 'Gagal menyimpan data kegiatan.');
+            echo json_encode(array('status' => false, 'message' => 'Data tidak ditemukan'));
         }
-
-        redirect("sip/sip7?posyandu_id={$posyandu_id}&bulan={$bulan}&tahun={$tahun}");
+        exit;
     }
 
     /**
-     * SIP 7: Export PDF using mPDF
+     * SIP 7: Simpan / Edit data Catatan Warga Total Desa (CRUD Form)
+     */
+    public function sip7_save()
+    {
+        $id = $this->input->post('id');
+        $desa_id = $this->input->post('desa_id');
+        $tahun = $this->input->post('tahun');
+        $kec_id = $this->input->post('kec_id');
+
+        if (empty($desa_id) || empty($tahun)) {
+            $this->session->set_flashdata('error', 'Desa dan Tahun wajib diisi.');
+            redirect('sip/sip7?kec_id=' . $kec_id . '&desa_id=' . $desa_id . '&tahun=' . $tahun);
+        }
+
+        $data = array(
+            'kode_kecamatan' => $kec_id ? $kec_id : $this->session->userdata('kec_id'),
+            'kode_desa' => $desa_id,
+            'tahun' => (int) $tahun,
+            'jml_rw' => (int) $this->input->post('jml_rw'),
+            'jml_rt' => (int) $this->input->post('jml_rt'),
+            'jml_dasawisma' => (int) $this->input->post('jml_dasawisma'),
+            'jml_krt' => (int) $this->input->post('jml_krt'),
+            'jml_kk' => (int) $this->input->post('jml_kk'),
+            'total_l' => (int) $this->input->post('total_l'),
+            'total_p' => (int) $this->input->post('total_p'),
+            'balita_l' => (int) $this->input->post('balita_l'),
+            'balita_p' => (int) $this->input->post('balita_p'),
+            'pus' => (int) $this->input->post('pus'),
+            'wus' => (int) $this->input->post('wus'),
+            'ibu_hamil' => (int) $this->input->post('ibu_hamil'),
+            'ibu_menyusui' => (int) $this->input->post('ibu_menyusui'),
+            'lansia' => (int) $this->input->post('lansia'),
+            'buta' => (int) $this->input->post('buta'),
+            'sehat_layak_huni' => (int) $this->input->post('sehat_layak_huni'),
+            'tidak_sehat_layak_huni' => (int) $this->input->post('tidak_sehat_layak_huni'),
+            'tempat_sampah' => (int) $this->input->post('tempat_sampah'),
+            'spal' => (int) $this->input->post('spal'),
+            'pdam' => (int) $this->input->post('pdam'),
+            'sumur' => (int) $this->input->post('sumur'),
+            'sungai' => (int) $this->input->post('sungai'),
+            'dll' => (int) $this->input->post('dll'),
+            'jamban' => (int) $this->input->post('jamban'),
+            'beras' => (int) $this->input->post('beras'),
+            'non_beras' => (int) $this->input->post('non_beras'),
+            'up2k' => (int) $this->input->post('up2k'),
+            'pemanfaatan_tanah' => (int) $this->input->post('pemanfaatan_tanah'),
+            'industri_rumah_tangga' => (int) $this->input->post('industri_rumah_tangga'),
+            'kesling' => (int) $this->input->post('kesling'),
+            'keterangan' => $this->input->post('keterangan') ? $this->input->post('keterangan') : ''
+        );
+
+        if ($this->sip_model->save_catatan_warga($data, $id)) {
+            $this->session->set_flashdata('success', 'Data Catatan Warga TP PKK berhasil disimpan.');
+        } else {
+            $this->session->set_flashdata('error', 'Gagal menyimpan data Catatan Warga.');
+        }
+
+        redirect('sip/sip7?kec_id=' . $kec_id . '&desa_id=' . $desa_id . '&tahun=' . $tahun);
+    }
+
+    /**
+     * SIP 7: Hapus data Catatan Warga
+     */
+    public function sip7_delete($id = null)
+    {
+        $kec_id = $this->input->get('kec_id');
+        $desa_id = $this->input->get('desa_id');
+        $tahun = $this->input->get('tahun');
+
+        if (!empty($id) && $this->sip_model->delete_catatan_warga($id)) {
+            $this->session->set_flashdata('success', 'Data Catatan Warga berhasil dihapus.');
+        } else {
+            $this->session->set_flashdata('error', 'Data tidak ditemukan atau gagal dihapus.');
+        }
+
+        redirect('sip/sip7?kec_id=' . $kec_id . '&desa_id=' . $desa_id . '&tahun=' . $tahun);
+    }
+
+    /**
+     * SIP 7: Export PDF Catatan Data dan Kegiatan Warga TP PKK Desa/Kelurahan
      */
     public function sip7_pdf()
     {
-        $posyandu_id = $this->input->get('posyandu_id');
-        $bulan = $this->input->get('bulan');
+        $desa_id = $this->input->get('desa_id');
         $tahun = $this->input->get('tahun');
 
-        if (empty($posyandu_id) || empty($bulan) || empty($tahun)) {
+        if (empty($desa_id) || empty($tahun)) {
             show_error('Parameter laporan tidak lengkap.', 400);
         }
 
-        $data['posyandu_details'] = $this->sip_model->get_posyandu_by_id($posyandu_id);
-        if (!$data['posyandu_details']) {
-            show_error('Posyandu tidak ditemukan atau Anda tidak memiliki akses.', 404);
+        $data['info_desa'] = $this->db->get_where('master_desa', array('Kd_Desa' => $desa_id))->row();
+        if (!$data['info_desa']) {
+            show_error('Desa tidak ditemukan.', 404);
         }
-
-        $data['activities'] = $this->sip_model->get_activities($posyandu_id, $bulan, $tahun);
-
-        $months = array(
-            1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
-            5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus',
-            9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember'
-        );
-        $data['nama_bulan'] = $months[intval($bulan)];
+        $data['info_kec'] = $this->db->get_where('master_kecamatan', array('Kd_Kec' => $data['info_desa']->Kd_Kec))->row();
+        $data['catatan_warga'] = $this->sip_model->get_catatan_warga_desa($desa_id, $tahun);
         $data['tahun'] = $tahun;
 
         // Render dynamic HTML for mPDF
         $html = $this->load->view('sip/pdf_sip7', $data, TRUE);
 
         // Instantiate mPDF and generate layout
-        $filename = "SIP7_Rekap_Kegiatan_" . str_replace(' ', '_', $data['posyandu_details']->nama_posyandu) . "_{$data['nama_bulan']}_{$tahun}";
+        $filename = "Catatan_Kegiatan_Warga_" . str_replace(' ', '_', $data['info_desa']->Nama_Desa) . "_{$tahun}";
 
         $mpdf = new \Mpdf\Mpdf([
             'mode' => 'utf-8', 
             'format' => 'A4-L', // Landscape A4 matching PKK requirements
-            'margin_left' => 15,
-            'margin_right' => 15,
-            'margin_top' => 15,
-            'margin_bottom' => 15,
+            'margin_left' => 10,
+            'margin_right' => 10,
+            'margin_top' => 12,
+            'margin_bottom' => 12,
         ]);
 
-        $mpdf->SetTitle("SIP 7 - Rekapitulasi Hasil Kegiatan Posyandu");
-        $mpdf->SetFooter('SIP 7 (Rekap Kegiatan)|Cetak: ' . date("d-m-Y H:i") . '|Halaman {PAGENO}');
+        $mpdf->SetTitle("Catatan Data dan Kegiatan Warga TP PKK Desa/Kelurahan");
+        $mpdf->SetFooter('Catatan Data & Kegiatan Warga TP PKK|Cetak: ' . date("d-m-Y H:i") . '|Halaman {PAGENO}');
         $mpdf->WriteHTML($html);
         $mpdf->Output($filename . '.pdf', 'I'); // Display in browser for printing
+    }
+
+    /**
+     * SIP 7: Export Excel Catatan Data dan Kegiatan Warga TP PKK Desa/Kelurahan
+     */
+    public function sip7_excel()
+    {
+        $desa_id = $this->input->get('desa_id');
+        $tahun = $this->input->get('tahun');
+
+        if (empty($desa_id) || empty($tahun)) {
+            show_error('Parameter laporan tidak lengkap.', 400);
+        }
+
+        $data['info_desa'] = $this->db->get_where('master_desa', array('Kd_Desa' => $desa_id))->row();
+        if (!$data['info_desa']) {
+            show_error('Desa tidak ditemukan.', 404);
+        }
+        $data['info_kec'] = $this->db->get_where('master_kecamatan', array('Kd_Kec' => $data['info_desa']->Kd_Kec))->row();
+        $data['catatan_warga'] = $this->sip_model->get_catatan_warga_desa($desa_id, $tahun);
+        $data['tahun'] = $tahun;
+
+        $filename = "Catatan_Kegiatan_Warga_" . str_replace(' ', '_', $data['info_desa']->Nama_Desa) . "_{$tahun}.xls";
+
+        header("Content-Type: application/vnd.ms-excel; charset=utf-8");
+        header("Content-Disposition: attachment; filename=\"$filename\"");
+        header("Cache-Control: max-age=0");
+
+        $this->load->view('sip/excel_sip7', $data);
     }
 }

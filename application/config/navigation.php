@@ -196,7 +196,7 @@ $config['navigation'] = array(
             ),
             'sip7' => array(
                 'uri' => 'sip/sip7',
-                'title' => 'SIP 7 (Rekap Kegiatan)'
+                'title' => 'Catatan Kegiatan Warga'
             ),
         )
     ),

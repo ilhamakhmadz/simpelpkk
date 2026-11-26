@@ -359,4 +359,103 @@ class Sip_model extends MY_Model
         $this->db->where('id', $id);
         return $this->db->update($this->kegiatan_table, array('visible' => 0));
     }
+
+    /**
+     * Get Catatan Data dan Kegiatan Warga TP PKK Desa/Kelurahan
+     * Mengambil data baru langsung dari tabel catatan_warga_tp_pkk (total per desa, bukan per dusun)
+     */
+    public function get_catatan_warga_desa($kode_desa, $tahun)
+    {
+        $this->db->select('c.*, md.Nama_Desa, mk.Nama_Kecamatan');
+        $this->db->from('catatan_warga_tp_pkk c');
+        $this->db->join('master_desa md', 'md.Kd_Desa = c.kode_desa', 'left');
+        $this->db->join('master_kecamatan mk', 'mk.Kd_Kec = c.kode_kecamatan', 'left');
+        $this->db->where('c.kode_desa', $kode_desa);
+        $this->db->where('c.tahun', $tahun);
+        $this->db->where('c.visible', 1);
+        $this->db->order_by('c.id', 'DESC');
+        return $this->db->get()->result();
+    }
+
+    /**
+     * Ambil jumlah master RW, RT, Dasawisma dari tabel master untuk pengisian form
+     */
+    public function get_master_wilayah_counts($kode_desa)
+    {
+        $this->db->where('Kd_Desa', $kode_desa);
+        $jml_rw = $this->db->count_all_results('master_rw');
+
+        $this->db->where('Kd_Desa', $kode_desa);
+        $jml_rt = $this->db->count_all_results('master_rt');
+
+        $this->db->where('Kd_Desa', $kode_desa);
+        $jml_dasawisma = $this->db->count_all_results('master_dasawisma');
+
+        return (object) [
+            'jml_rw' => $jml_rw,
+            'jml_rt' => $jml_rt,
+            'jml_dasawisma' => $jml_dasawisma
+        ];
+    }
+
+    /**
+     * Helper to get list of Kecamatan for dropdown filter
+     */
+    public function get_all_kecamatan()
+    {
+        $this->db->where('visible', 1);
+        $this->db->order_by('Nama_Kecamatan', 'ASC');
+        return $this->db->get('master_kecamatan')->result();
+    }
+
+    /**
+     * Helper to get list of Desa by Kecamatan
+     */
+    public function get_desa_by_kecamatan($kd_kec)
+    {
+        $this->db->where('Kd_Kec', $kd_kec);
+        $this->db->where('visible', 1);
+        $this->db->order_by('Nama_Desa', 'ASC');
+        return $this->db->get('master_desa')->result();
+    }
+
+    /**
+     * Get single Catatan Warga record by ID
+     */
+    public function get_catatan_warga_by_id($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->where('visible', 1);
+        return $this->db->get('catatan_warga_tp_pkk')->row();
+    }
+
+    /**
+     * Save Catatan Warga Total Desa (Insert or Update)
+     */
+    public function save_catatan_warga($data, $id = null)
+    {
+        if (!empty($id)) {
+            $this->db->where('id', $id);
+            $data['updated_at'] = date('Y-m-d H:i:s');
+            $data['updated_by'] = $this->session->userdata('user_id');
+            return $this->db->update('catatan_warga_tp_pkk', $data);
+        } else {
+            $data['created_by'] = $this->session->userdata('user_id');
+            $data['visible'] = 1;
+            return $this->db->insert('catatan_warga_tp_pkk', $data);
+        }
+    }
+
+    /**
+     * Soft delete Catatan Warga record
+     */
+    public function delete_catatan_warga($id)
+    {
+        $this->db->where('id', $id);
+        return $this->db->update('catatan_warga_tp_pkk', array(
+            'visible' => 0,
+            'updated_at' => date('Y-m-d H:i:s'),
+            'updated_by' => $this->session->userdata('user_id')
+        ));
+    }
 }
