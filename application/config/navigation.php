@@ -192,7 +192,7 @@ $config['navigation'] = array(
         'children' => array(
             'sip6' => array(
                 'uri' => 'sip/sip6',
-                'title' => 'SIP 6 (Register Posyandu)'
+                'title' => 'Catatan Ibu Hamil & Bayi'
             ),
             'sip7' => array(
                 'uri' => 'sip/sip7',

@@ -76,10 +76,10 @@ $query_builder = true;
 
 $db['default'] = array(
     'dsn'	=> '',
-    'hostname' => '127.0.0.1',
+    'hostname' => 'localhost',
     'username' => 'root',
     'password' => '',
-    'database' => 'pkk2023',
+    'database' => 'pkk_2023',
     'dbdriver' => 'mysqli',
     'dbprefix' => '',
     'pconnect' => false,

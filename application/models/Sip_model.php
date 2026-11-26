@@ -378,6 +378,60 @@ class Sip_model extends MY_Model
     }
 
     /**
+     * Rekapitulasi Catatan Data dan Kegiatan Warga TP PKK Tingkat Kecamatan (35 Kolom)
+     * Agregasi dari catatan_warga_tp_pkk per Desa/Kelurahan dalam satu Kecamatan
+     */
+    public function get_rekap_kecamatan($kode_kecamatan, $tahun)
+    {
+        $this->db->select('
+            md.Kd_Desa,
+            md.Nama_Desa,
+            COUNT(c.id) as jml_dusun,
+            SUM(c.jml_rw) as jml_rw,
+            SUM(c.jml_rt) as jml_rt,
+            SUM(c.jml_dasawisma) as jml_dasawisma,
+            SUM(c.jml_krt) as jml_krt,
+            SUM(c.jml_kk) as jml_kk,
+            SUM(c.total_l) as total_l,
+            SUM(c.total_p) as total_p,
+            SUM(c.balita_l) as balita_l,
+            SUM(c.balita_p) as balita_p,
+            SUM(c.pus) as pus,
+            SUM(c.wus) as wus,
+            SUM(c.ibu_hamil) as ibu_hamil,
+            SUM(c.ibu_menyusui) as ibu_menyusui,
+            SUM(c.lansia) as lansia,
+            SUM(c.buta) as buta,
+            SUM(c.buta_l) as buta_l,
+            SUM(c.buta_p) as buta_p,
+            SUM(c.sehat_layak_huni) as sehat_layak_huni,
+            SUM(c.tidak_sehat_layak_huni) as tidak_sehat_layak_huni,
+            SUM(c.tempat_sampah) as tempat_sampah,
+            SUM(c.spal) as spal,
+            SUM(c.pdam) as pdam,
+            SUM(c.sumur) as sumur,
+            SUM(c.sungai) as sungai,
+            SUM(c.dll) as dll,
+            SUM(c.jamban) as jamban,
+            SUM(c.beras) as beras,
+            SUM(c.non_beras) as non_beras,
+            SUM(c.up2k) as up2k,
+            SUM(c.pemanfaatan_tanah) as pemanfaatan_tanah,
+            SUM(c.industri_rumah_tangga) as industri_rumah_tangga,
+            SUM(c.kesling) as kesling,
+            GROUP_CONCAT(DISTINCT NULLIF(c.keterangan, "") SEPARATOR "; ") as keterangan
+        ');
+        $this->db->from('catatan_warga_tp_pkk c');
+        $this->db->join('master_desa md', 'md.Kd_Desa = c.kode_desa', 'left');
+        $this->db->where('c.kode_kecamatan', $kode_kecamatan);
+        $this->db->where('c.tahun', $tahun);
+        $this->db->where('c.visible', 1);
+        $this->db->group_by('c.kode_desa');
+        $this->db->order_by('md.Nama_Desa', 'ASC');
+        return $this->db->get()->result();
+    }
+
+    /**
      * Ambil jumlah master RW, RT, Dasawisma dari tabel master untuk pengisian form
      */
     public function get_master_wilayah_counts($kode_desa)
@@ -457,5 +511,89 @@ class Sip_model extends MY_Model
             'updated_at' => date('Y-m-d H:i:s'),
             'updated_by' => $this->session->userdata('user_id')
         ));
+    }
+
+    /**
+     * Get Catatan Ibu Hamil, Melahirkan, Nifas, Bayi & Balita TP PKK Desa/Kelurahan
+     */
+    public function get_catatan_ibu_bayi($kode_desa, $bulan, $tahun)
+    {
+        $this->db->select('c.*, md.Nama_Desa, mk.Nama_Kecamatan');
+        $this->db->from('catatan_ibu_bayi_tp_pkk c');
+        $this->db->join('master_desa md', 'md.Kd_Desa = c.kode_desa', 'left');
+        $this->db->join('master_kecamatan mk', 'mk.Kd_Kec = c.kode_kecamatan', 'left');
+        $this->db->where('c.kode_desa', $kode_desa);
+        $this->db->where('c.bulan', $bulan);
+        $this->db->where('c.tahun', $tahun);
+        $this->db->where('c.visible', 1);
+        $this->db->order_by('c.id', 'DESC');
+        return $this->db->get()->result();
+    }
+
+    /**
+     * Save Catatan Ibu Hamil, Melahirkan, Nifas, Bayi & Balita (Insert or Update)
+     */
+    public function save_catatan_ibu_bayi($data, $id = null)
+    {
+        if (!empty($id)) {
+            $this->db->where('id', $id);
+            $data['updated_at'] = date('Y-m-d H:i:s');
+            $data['updated_by'] = $this->session->userdata('user_id');
+            return $this->db->update('catatan_ibu_bayi_tp_pkk', $data);
+        } else {
+            $data['created_by'] = $this->session->userdata('user_id');
+            $data['visible'] = 1;
+            return $this->db->insert('catatan_ibu_bayi_tp_pkk', $data);
+        }
+    }
+
+    /**
+     * Soft delete Catatan Ibu Hamil & Bayi record
+     */
+    public function delete_catatan_ibu_bayi($id)
+    {
+        $this->db->where('id', $id);
+        return $this->db->update('catatan_ibu_bayi_tp_pkk', array(
+            'visible' => 0,
+            'updated_at' => date('Y-m-d H:i:s'),
+            'updated_by' => $this->session->userdata('user_id')
+        ));
+    }
+
+    /**
+     * Rekapitulasi Catatan Ibu Hamil, Melahirkan, Nifas, Bayi & Balita Tingkat Kecamatan (Lampiran 4.19b - 19 Kolom)
+     */
+    public function get_rekap_ibu_bayi_kecamatan($kode_kecamatan, $bulan, $tahun)
+    {
+        $this->db->select('
+            md.Kd_Desa,
+            md.Nama_Desa,
+            COUNT(c.id) as jml_dusun,
+            SUM(c.jml_rw) as jml_rw,
+            SUM(c.jml_rt) as jml_rt,
+            SUM(c.jml_dasawisma) as jml_dasawisma,
+            SUM(c.ibu_hamil) as ibu_hamil,
+            SUM(c.ibu_melahirkan) as ibu_melahirkan,
+            SUM(c.ibu_nifas) as ibu_nifas,
+            SUM(c.ibu_meninggal) as ibu_meninggal,
+            SUM(c.bayi_lahir_l) as bayi_lahir_l,
+            SUM(c.bayi_lahir_p) as bayi_lahir_p,
+            SUM(c.bayi_akte_ada) as bayi_akte_ada,
+            SUM(c.bayi_akte_tidak) as bayi_akte_tidak,
+            SUM(c.bayi_meninggal_l) as bayi_meninggal_l,
+            SUM(c.bayi_meninggal_p) as bayi_meninggal_p,
+            SUM(c.balita_meninggal_l) as balita_meninggal_l,
+            SUM(c.balita_meninggal_p) as balita_meninggal_p,
+            GROUP_CONCAT(DISTINCT NULLIF(c.keterangan, "") SEPARATOR "; ") as keterangan
+        ');
+        $this->db->from('catatan_ibu_bayi_tp_pkk c');
+        $this->db->join('master_desa md', 'md.Kd_Desa = c.kode_desa', 'left');
+        $this->db->where('c.kode_kecamatan', $kode_kecamatan);
+        $this->db->where('c.bulan', $bulan);
+        $this->db->where('c.tahun', $tahun);
+        $this->db->where('c.visible', 1);
+        $this->db->group_by('c.kode_desa');
+        $this->db->order_by('md.Nama_Desa', 'ASC');
+        return $this->db->get()->result();
     }
 }

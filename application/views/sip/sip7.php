@@ -156,7 +156,7 @@
                         <thead class="bg-primary text-white fw-bolder">
                             <tr>
                                 <th class="text-center align-middle" style="width: 50px;">NO</th>
-                                <th class="text-start align-middle" style="min-width: 160px;">DESA / KELURAHAN</th>
+                                <th class="text-start align-middle" style="min-width: 160px;">NAMA DUSUN / LINGKUNGAN</th>
                                 <th class="text-center align-middle">TAHUN</th>
                                 <th class="text-center align-middle">JUML RW</th>
                                 <th class="text-center align-middle">JUML RT</th>
@@ -179,7 +179,7 @@
                                 <tr>
                                     <td><?php echo $no++; ?></td>
                                     <td class="text-start fw-bolder text-dark">
-                                        <i class="fa fa-building text-primary me-2"></i><?php echo htmlspecialchars($item->Nama_Desa ? $item->Nama_Desa : ($info_desa ? $info_desa->Nama_Desa : '-')); ?>
+                                        <i class="fa fa-map-marker text-danger me-2"></i><?php echo htmlspecialchars(!empty($item->nama_dusun) ? $item->nama_dusun : ($item->Nama_Desa ? $item->Nama_Desa : ($info_desa ? $info_desa->Nama_Desa : '-'))); ?>
                                     </td>
                                     <td><span class="badge badge-light-dark fw-bold fs-7"><?php echo $item->tahun; ?></span></td>
                                     <td><span class="badge badge-light-primary fw-bold fs-7"><?php echo number_format($item->jml_rw, 0, ',', '.'); ?> RW</span></td>
@@ -343,15 +343,19 @@
                     <!-- Section 1: Wilayah (Dari Master Data) & Tahun -->
                     <div class="bg-light p-4 rounded mb-5 border border-gray-300">
                         <div class="row g-3">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="fs-7 fw-bold text-muted mb-1">Desa / Kelurahan (Master)</label>
                                 <input type="text" class="form-control form-control-sm form-control-solid fw-bold" value="<?php echo htmlspecialchars($info_desa ? strtoupper($info_desa->Nama_Desa) : '-'); ?>" readonly />
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="fs-7 fw-bold text-muted mb-1">Kecamatan (Master)</label>
                                 <input type="text" class="form-control form-control-sm form-control-solid fw-bold" value="<?php echo htmlspecialchars($info_kec ? strtoupper($info_kec->Nama_Kecamatan) : '-'); ?>" readonly />
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
+                                <label class="fs-7 fw-bold mb-1">Nama Dusun / Lingkungan</label>
+                                <input type="text" class="form-control form-control-sm form-control-solid" name="nama_dusun" id="crud_nama_dusun" placeholder="Contoh: Dusun 1 / Lingkungan" />
+                            </div>
+                            <div class="col-md-3">
                                 <label class="required fs-7 fw-bold mb-1">Tahun Pendataan</label>
                                 <select class="form-select form-select-sm form-select-solid" name="tahun" id="crud_tahun" required>
                                     <?php foreach ($years as $yr): ?>
@@ -440,8 +444,12 @@
                                     <input type="number" class="form-control form-control-sm form-control-solid" name="lansia" id="crud_lansia" min="0" value="0" />
                                 </div>
                                 <div class="col-md-2">
-                                    <label class="fs-7 fw-bold text-gray-700">3 Buta</label>
-                                    <input type="number" class="form-control form-control-sm form-control-solid" name="buta" id="crud_buta" min="0" value="0" />
+                                    <label class="fs-7 fw-bold text-gray-700">3 Buta (L)</label>
+                                    <input type="number" class="form-control form-control-sm form-control-solid" name="buta_l" id="crud_buta_l" min="0" value="0" />
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="fs-7 fw-bold text-gray-700">3 Buta (P)</label>
+                                    <input type="number" class="form-control form-control-sm form-control-solid" name="buta_p" id="crud_buta_p" min="0" value="0" />
                                 </div>
                             </div>
                         </div>
@@ -563,11 +571,11 @@
 
 <script>
 function openModalDetail(item) {
-    var namaDesa = item.Nama_Desa ? item.Nama_Desa : '<?php echo htmlspecialchars($info_desa ? $info_desa->Nama_Desa : "-"); ?>';
-    document.getElementById('detail_modal_title').innerHTML = '<i class="fa fa-file-text-o text-white me-2"></i> Detail Catatan Warga: ' + namaDesa + ' (Tahun ' + item.tahun + ')';
+    var namaWilayah = item.nama_dusun ? item.nama_dusun : (item.Nama_Desa ? item.Nama_Desa : '<?php echo htmlspecialchars($info_desa ? $info_desa->Nama_Desa : "-"); ?>');
+    document.getElementById('detail_modal_title').innerHTML = '<i class="fa fa-file-text-o text-white me-2"></i> Detail Catatan Warga: ' + namaWilayah + ' (Tahun ' + item.tahun + ')';
 
     var htmlTable = '<tr>' +
-        '<td class="text-start fw-bold">' + namaDesa + '</td>' +
+        '<td class="text-start fw-bold">' + namaWilayah + '</td>' +
         '<td>' + item.jml_rw + '</td>' +
         '<td>' + item.jml_rt + '</td>' +
         '<td>' + item.jml_dasawisma + '</td>' +
@@ -652,6 +660,7 @@ function openModalTambah() {
 function openModalEdit(item) {
     document.getElementById('form_sip7').reset();
     document.getElementById('crud_id').value = item.id;
+    document.getElementById('crud_nama_dusun').value = item.nama_dusun || '';
     document.getElementById('crud_tahun').value = item.tahun;
 
     document.getElementById('crud_jml_rw').value = item.jml_rw || 0;
@@ -669,7 +678,8 @@ function openModalEdit(item) {
     document.getElementById('crud_ibu_hamil').value = item.ibu_hamil || 0;
     document.getElementById('crud_ibu_menyusui').value = item.ibu_menyusui || 0;
     document.getElementById('crud_lansia').value = item.lansia || 0;
-    document.getElementById('crud_buta').value = item.buta || 0;
+    document.getElementById('crud_buta_l').value = item.buta_l || 0;
+    document.getElementById('crud_buta_p').value = item.buta_p || 0;
 
     document.getElementById('crud_sehat_layak_huni').value = item.sehat_layak_huni || 0;
     document.getElementById('crud_tidak_sehat_layak_huni').value = item.tidak_sehat_layak_huni || 0;
