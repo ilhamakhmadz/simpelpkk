@@ -39,6 +39,43 @@ class Pokja1_model extends MY_Model
         $select .= $this->table . ".kelompok_keagamaan, ";
         $select .= $this->table . ".kelompok_jimpitan, ";
         $select .= $this->table . ".kelompok_arisan, ";
+
+        // Program KISAH
+        $select .= $this->table . ".kisah_kegiatan, ";
+        $select .= $this->table . ".kisah_vol_keg, ";
+        $select .= $this->table . ".kisah_metode, ";
+        $select .= $this->table . ".kisah_jml_sasaran, ";
+
+        // Program KRISAN
+        $select .= $this->table . ".krisan_kegiatan, ";
+        $select .= $this->table . ".krisan_vol_keg, ";
+        $select .= $this->table . ".krisan_metode, ";
+        $select .= $this->table . ".krisan_jml_sasaran, ";
+
+        // Program KIJAT
+        $select .= $this->table . ".kijat_kegiatan, ";
+        $select .= $this->table . ".kijat_vol_keg, ";
+        $select .= $this->table . ".kijat_metode, ";
+        $select .= $this->table . ".kijat_jml_sasaran, ";
+
+        // Program KUAT
+        $select .= $this->table . ".kuat_kegiatan, ";
+        $select .= $this->table . ".kuat_vol_keg, ";
+        $select .= $this->table . ".kuat_metode, ";
+        $select .= $this->table . ".kuat_jml_sasaran, ";
+
+        // Program KISAK
+        $select .= $this->table . ".kisak_kegiatan, ";
+        $select .= $this->table . ".kisak_vol_keg, ";
+        $select .= $this->table . ".kisak_metode, ";
+        $select .= $this->table . ".kisak_jml_sasaran, ";
+
+        // Program PKBN (sub-kolom kegiatan)
+        $select .= $this->table . ".pkbn_kegiatan, ";
+        $select .= $this->table . ".pkbn_vol_keg, ";
+        $select .= $this->table . ".pkbn_metode, ";
+        $select .= $this->table . ".pkbn_jml_sasaran, ";
+
         $select .= $this->table . ".keterangan, ";
         $select .= $this->table . ".date_year, ";
         $select .= $this->table . ".created_id, ";

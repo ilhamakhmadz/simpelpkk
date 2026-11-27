@@ -63,6 +63,38 @@ class Api_pokja1 extends Admin_Controller
                 'kelompok_keagamaan' => $this->input->post('kelompok_keagamaan'),
                 'kelompok_jimpitan' => $this->input->post('kelompok_jimpitan'),
                 'kelompok_arisan' => $this->input->post('kelompok_arisan'),
+
+                // Program Baru POKJA I
+                'kisah_kegiatan' => $this->input->post('kisah_kegiatan'),
+                'kisah_vol_keg' => $this->input->post('kisah_vol_keg'),
+                'kisah_metode' => $this->input->post('kisah_metode'),
+                'kisah_jml_sasaran' => $this->input->post('kisah_jml_sasaran'),
+
+                'krisan_kegiatan' => $this->input->post('krisan_kegiatan'),
+                'krisan_vol_keg' => $this->input->post('krisan_vol_keg'),
+                'krisan_metode' => $this->input->post('krisan_metode'),
+                'krisan_jml_sasaran' => $this->input->post('krisan_jml_sasaran'),
+
+                'kijat_kegiatan' => $this->input->post('kijat_kegiatan'),
+                'kijat_vol_keg' => $this->input->post('kijat_vol_keg'),
+                'kijat_metode' => $this->input->post('kijat_metode'),
+                'kijat_jml_sasaran' => $this->input->post('kijat_jml_sasaran'),
+
+                'kuat_kegiatan' => $this->input->post('kuat_kegiatan'),
+                'kuat_vol_keg' => $this->input->post('kuat_vol_keg'),
+                'kuat_metode' => $this->input->post('kuat_metode'),
+                'kuat_jml_sasaran' => $this->input->post('kuat_jml_sasaran'),
+
+                'kisak_kegiatan' => $this->input->post('kisak_kegiatan'),
+                'kisak_vol_keg' => $this->input->post('kisak_vol_keg'),
+                'kisak_metode' => $this->input->post('kisak_metode'),
+                'kisak_jml_sasaran' => $this->input->post('kisak_jml_sasaran'),
+
+                'pkbn_kegiatan' => $this->input->post('pkbn_kegiatan'),
+                'pkbn_vol_keg' => $this->input->post('pkbn_vol_keg'),
+                'pkbn_metode' => $this->input->post('pkbn_metode'),
+                'pkbn_jml_sasaran' => $this->input->post('pkbn_jml_sasaran'),
+
                 'keterangan' => $this->input->post('keterangan'),
                 'created_id' => $this->session->userdata('id'),
                 'date_year' => date("Y")
@@ -98,6 +130,38 @@ class Api_pokja1 extends Admin_Controller
                 'kelompok_keagamaan' => $this->input->post('kelompok_keagamaan'),
                 'kelompok_jimpitan' => $this->input->post('kelompok_jimpitan'),
                 'kelompok_arisan' => $this->input->post('kelompok_arisan'),
+
+                // Program Baru POKJA I
+                'kisah_kegiatan' => $this->input->post('kisah_kegiatan'),
+                'kisah_vol_keg' => $this->input->post('kisah_vol_keg'),
+                'kisah_metode' => $this->input->post('kisah_metode'),
+                'kisah_jml_sasaran' => $this->input->post('kisah_jml_sasaran'),
+
+                'krisan_kegiatan' => $this->input->post('krisan_kegiatan'),
+                'krisan_vol_keg' => $this->input->post('krisan_vol_keg'),
+                'krisan_metode' => $this->input->post('krisan_metode'),
+                'krisan_jml_sasaran' => $this->input->post('krisan_jml_sasaran'),
+
+                'kijat_kegiatan' => $this->input->post('kijat_kegiatan'),
+                'kijat_vol_keg' => $this->input->post('kijat_vol_keg'),
+                'kijat_metode' => $this->input->post('kijat_metode'),
+                'kijat_jml_sasaran' => $this->input->post('kijat_jml_sasaran'),
+
+                'kuat_kegiatan' => $this->input->post('kuat_kegiatan'),
+                'kuat_vol_keg' => $this->input->post('kuat_vol_keg'),
+                'kuat_metode' => $this->input->post('kuat_metode'),
+                'kuat_jml_sasaran' => $this->input->post('kuat_jml_sasaran'),
+
+                'kisak_kegiatan' => $this->input->post('kisak_kegiatan'),
+                'kisak_vol_keg' => $this->input->post('kisak_vol_keg'),
+                'kisak_metode' => $this->input->post('kisak_metode'),
+                'kisak_jml_sasaran' => $this->input->post('kisak_jml_sasaran'),
+
+                'pkbn_kegiatan' => $this->input->post('pkbn_kegiatan'),
+                'pkbn_vol_keg' => $this->input->post('pkbn_vol_keg'),
+                'pkbn_metode' => $this->input->post('pkbn_metode'),
+                'pkbn_jml_sasaran' => $this->input->post('pkbn_jml_sasaran'),
+
                 'keterangan' => $this->input->post('keterangan'),
                 'updated_id' => $this->session->userdata('id'),
                 'updated_date' => date('Y-m-d h:i:s')
