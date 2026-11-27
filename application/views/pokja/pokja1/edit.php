@@ -273,10 +273,10 @@
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-3 mt-2">
-					<label class="fs-7 fw-bold">Kegiatan</label>
-					<input class="form-control form-control-sm form-control-solid" type="number"
-						value="<?= isset($pokja1->$f_kegiatan) ? $pokja1->$f_kegiatan : 0 ?>"
-						id="<?= $kode ?>_kegiatan" name="<?= $kode ?>_kegiatan" min="0">
+					<label class="fs-7 fw-bold">Jenis Kegiatan</label>
+					<input class="form-control form-control-sm form-control-solid" type="text"
+						value="<?= isset($pokja1->$f_kegiatan) ? htmlspecialchars($pokja1->$f_kegiatan) : '' ?>"
+						id="<?= $kode ?>_kegiatan" name="<?= $kode ?>_kegiatan" placeholder="Cth: CEPAK / CATIN / JUPITER">
 				</div>
 				<div class="col-lg-3 col-md-3 mt-2">
 					<label class="fs-7 fw-bold">Vol. Keg</label>

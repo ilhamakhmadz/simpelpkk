@@ -188,6 +188,27 @@ class User extends Admin_Controller
         $this->_updatedata($id);
     }
 
+    /**
+     * Display Last Login activity.
+     */
+    public function last_login()
+    {
+        $this->load->vars(array(
+            'page_title' => 'Last Login Activity',
+            'url_home' => '<li class="breadcrumb-item"><a href="' . base_url('dashboard/home') . '" class="text-muted text-hover-primary">Home</a></li>',
+            'url_children' => '<li class="breadcrumb-item"><a href="' . base_url('auth/user') . '" class="text-muted text-hover-primary">Administrator</a></li>',
+            'url_page' => '<li class="breadcrumb-item text-dark">Last Login</li>',
+        ));
+
+        $this->data['last_login_operator'] = $this->user_model->last_login_users();
+        $this->data['last_login_kec_desa'] = $this->user_model->last_login_users_kec();
+
+        $this->template
+            ->set_css(assets_url('admin_assets/assets/plugins/custom/datatables/datatables.bundle'))
+            ->set_js(assets_url('admin_assets/assets/plugins/custom/datatables/datatables.bundle.js', true))
+            ->build('auth/last_login', $this->data);
+    }
+
     public function edit_profile($id)
     {
         $this->profile_updatedata($id);

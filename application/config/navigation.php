@@ -208,6 +208,10 @@ $config['navigation'] = array(
                 'uri' => 'auth/user',
                 'title' => 'Management User'
             ),
+            'last_login' => array(
+                'uri' => 'auth/user/last_login',
+                'title' => 'Last Login'
+            ),
             'rules' => array(
                 'uri' => 'acl/rule',
                 'title' => 'Hak Akses User'

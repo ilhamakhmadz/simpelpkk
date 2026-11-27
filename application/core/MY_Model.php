@@ -334,6 +334,18 @@ class MY_Model extends CI_Model
         }
     }
 
+    /**
+     * Count all visible rows in the model table.
+     *
+     * @return int
+     */
+    public function count_all()
+    {
+        $this->db->from($this->table);
+        $this->db->where('visible', 1);
+        return $this->db->count_all_results();
+    }
+
     public function get_dropdown_array($display_field, $id_field = '')
     {
         if (empty($id_field)) {

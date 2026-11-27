@@ -282,9 +282,9 @@
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-3 mt-2">
-					<label class="fs-7 fw-bold">Kegiatan</label>
-					<input class="form-control form-control-sm form-control-solid" type="number" value="0"
-						id="<?= $kode ?>_kegiatan" name="<?= $kode ?>_kegiatan" min="0">
+					<label class="fs-7 fw-bold">Jenis Kegiatan</label>
+					<input class="form-control form-control-sm form-control-solid" type="text" value=""
+						id="<?= $kode ?>_kegiatan" name="<?= $kode ?>_kegiatan" placeholder="Cth: CEPAK / CATIN / JUPITER">
 				</div>
 				<div class="col-lg-3 col-md-3 mt-2">
 					<label class="fs-7 fw-bold">Vol. Keg</label>

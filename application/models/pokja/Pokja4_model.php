@@ -33,6 +33,9 @@ class Pokja4_model extends MY_Model
         $select .= $this->table . ".kes_posyandu_klp, ";
         $select .= $this->table . ".kes_posyandu_lansia_anggota, ";
         $select .= $this->table . ".kes_posyandu_lansia_kartu_gratis, ";
+        $select .= $this->table . ".imunisasi_bayi_balita, ";
+        $select .= $this->table . ".pkg, ";
+        $select .= $this->table . ".tbc, ";
         $select .= $this->table . ".rumah_jamban, ";
         $select .= $this->table . ".rumah_spai, ";
         $select .= $this->table . ".rumah_pembuangan_sampah, ";
@@ -45,6 +48,10 @@ class Pokja4_model extends MY_Model
         $select .= $this->table . ".akseptor_kb_l, ";
         $select .= $this->table . ".akseptor_kb_p, ";
         $select .= $this->table . ".pnya_tab_keluarga, ";
+        $select .= $this->table . ".kk_asuransi_kesehatan, ";
+        $select .= $this->table . ".prog_kesehatan, ";
+        $select .= $this->table . ".prog_kelestarian, ";
+        $select .= $this->table . ".prog_perencanaan_sehat, ";
         $select .= $this->table . ".keterangan, ";
         $select .= $this->table . ".date_year, ";
         $select .= $this->table . ".created_id, ";
@@ -205,6 +212,9 @@ class Pokja4_model extends MY_Model
         SUM(kes_posyandu_klp) as jml_kes_posyandu_klp,
         SUM(kes_posyandu_lansia_anggota) as jml_kes_posyandu_lansia_anggota,
         SUM(kes_posyandu_lansia_kartu_gratis) as jml_kes_posyandu_lansia_kartu_gratis,
+        SUM(imunisasi_bayi_balita) as jml_imunisasi_bayi_balita,
+        SUM(pkg) as jml_pkg,
+        SUM(tbc) as jml_tbc,
         SUM(rumah_jamban) as jml_rumah_jamban,
         SUM(rumah_spai) as jml_rumah_spai,
         SUM(rumah_pembuangan_sampah) as jml_rumah_pembuangan_sampah,
@@ -216,7 +226,11 @@ class Pokja4_model extends MY_Model
         SUM(jum_wus) as jml_jum_wus,
         SUM(akseptor_kb_l) as jml_akseptor_kb_l,
         SUM(akseptor_kb_p) as jml_akseptor_kb_p,
-        SUM(pnya_tab_keluarga) as jml_pnya_tab_keluarga');
+        SUM(pnya_tab_keluarga) as jml_pnya_tab_keluarga,
+        SUM(kk_asuransi_kesehatan) as jml_kk_asuransi_kesehatan,
+        SUM(prog_kesehatan) as jml_prog_kesehatan,
+        SUM(prog_kelestarian) as jml_prog_kelestarian,
+        SUM(prog_perencanaan_sehat) as jml_prog_perencanaan_sehat');
         $this->db->where($this->table . '.kode_kecamatan', $kec);
         $this->db->where($this->table . '.date_year', $year);
         $this->db->where($this->table . '.visible', 1);
@@ -252,6 +266,9 @@ class Pokja4_model extends MY_Model
         SUM(kes_posyandu_klp) as jml_kes_posyandu_klp,
         SUM(kes_posyandu_lansia_anggota) as jml_kes_posyandu_lansia_anggota,
         SUM(kes_posyandu_lansia_kartu_gratis) as jml_kes_posyandu_lansia_kartu_gratis,
+        SUM(imunisasi_bayi_balita) as jml_imunisasi_bayi_balita,
+        SUM(pkg) as jml_pkg,
+        SUM(tbc) as jml_tbc,
         SUM(rumah_jamban) as jml_rumah_jamban,
         SUM(rumah_spai) as jml_rumah_spai,
         SUM(rumah_pembuangan_sampah) as jml_rumah_pembuangan_sampah,
@@ -263,7 +280,11 @@ class Pokja4_model extends MY_Model
         SUM(jum_wus) as jml_jum_wus,
         SUM(akseptor_kb_l) as jml_akseptor_kb_l,
         SUM(akseptor_kb_p) as jml_akseptor_kb_p,
-        SUM(pnya_tab_keluarga) as jml_pnya_tab_keluarga');
+        SUM(pnya_tab_keluarga) as jml_pnya_tab_keluarga,
+        SUM(kk_asuransi_kesehatan) as jml_kk_asuransi_kesehatan,
+        SUM(prog_kesehatan) as jml_prog_kesehatan,
+        SUM(prog_kelestarian) as jml_prog_kelestarian,
+        SUM(prog_perencanaan_sehat) as jml_prog_perencanaan_sehat');
         $this->db->where($this->table . '.kode_kecamatan', $kec);
         $this->db->where($this->table . '.kode_desa', $desa);
         $this->db->where($this->table . '.date_year', $year);
@@ -302,6 +323,9 @@ class Pokja4_model extends MY_Model
         SUM(kes_posyandu_klp) as jml_kes_posyandu_klp,
         SUM(kes_posyandu_lansia_anggota) as jml_kes_posyandu_lansia_anggota,
         SUM(kes_posyandu_lansia_kartu_gratis) as jml_kes_posyandu_lansia_kartu_gratis,
+        SUM(imunisasi_bayi_balita) as jml_imunisasi_bayi_balita,
+        SUM(pkg) as jml_pkg,
+        SUM(tbc) as jml_tbc,
         SUM(rumah_jamban) as jml_rumah_jamban,
         SUM(rumah_spai) as jml_rumah_spai,
         SUM(rumah_pembuangan_sampah) as jml_rumah_pembuangan_sampah,
@@ -313,7 +337,11 @@ class Pokja4_model extends MY_Model
         SUM(jum_wus) as jml_jum_wus,
         SUM(akseptor_kb_l) as jml_akseptor_kb_l,
         SUM(akseptor_kb_p) as jml_akseptor_kb_p,
-        SUM(pnya_tab_keluarga) as jml_pnya_tab_keluarga');
+        SUM(pnya_tab_keluarga) as jml_pnya_tab_keluarga,
+        SUM(kk_asuransi_kesehatan) as jml_kk_asuransi_kesehatan,
+        SUM(prog_kesehatan) as jml_prog_kesehatan,
+        SUM(prog_kelestarian) as jml_prog_kelestarian,
+        SUM(prog_perencanaan_sehat) as jml_prog_perencanaan_sehat');
         $this->db->where($this->table . '.date_year', $year);
         $this->db->where($this->table . '.kode_kecamatan', $kecamatan);
         $this->db->where($this->table . '.kode_desa', $desa);
@@ -355,6 +383,9 @@ class Pokja4_model extends MY_Model
         SUM(kes_posyandu_klp) as jml_kes_posyandu_klp,
         SUM(kes_posyandu_lansia_anggota) as jml_kes_posyandu_lansia_anggota,
         SUM(kes_posyandu_lansia_kartu_gratis) as jml_kes_posyandu_lansia_kartu_gratis,
+        SUM(imunisasi_bayi_balita) as jml_imunisasi_bayi_balita,
+        SUM(pkg) as jml_pkg,
+        SUM(tbc) as jml_tbc,
         SUM(rumah_jamban) as jml_rumah_jamban,
         SUM(rumah_spai) as jml_rumah_spai,
         SUM(rumah_pembuangan_sampah) as jml_rumah_pembuangan_sampah,
@@ -366,7 +397,11 @@ class Pokja4_model extends MY_Model
         SUM(jum_wus) as jml_jum_wus,
         SUM(akseptor_kb_l) as jml_akseptor_kb_l,
         SUM(akseptor_kb_p) as jml_akseptor_kb_p,
-        SUM(pnya_tab_keluarga) as jml_pnya_tab_keluarga');
+        SUM(pnya_tab_keluarga) as jml_pnya_tab_keluarga,
+        SUM(kk_asuransi_kesehatan) as jml_kk_asuransi_kesehatan,
+        SUM(prog_kesehatan) as jml_prog_kesehatan,
+        SUM(prog_kelestarian) as jml_prog_kelestarian,
+        SUM(prog_perencanaan_sehat) as jml_prog_perencanaan_sehat');
         $this->db->where($this->table . '.date_year', $year);
         $this->db->where($this->table . '.kode_kecamatan', $kecamatan);
         $this->db->where($this->table . '.kode_desa', $desa);

@@ -214,6 +214,32 @@
 													<!--end::Form Group-->
 												</div>
 											</div>
+											<div class="fv-row row md-8">
+												<div class="col-lg-4 col-md-4 mt-6">
+													<!--end::Form Group-->
+													<div id="div-kec">
+														<label class="fs-6 form-label required">Imunisasi / Vaksinasi Bayi/Balita</label>
+														<input class="form-control form-control-lg form-control-solid required" type="number" value="0" id="imunisasi_bayi_balita" name="imunisasi_bayi_balita"  required>
+													</div>
+													<!--begin::Form Group-->
+												</div>
+												<div class="col-lg-4 col-md-4 mt-6">
+													<!--end::Form Group-->
+													<div id="div-kec">
+														<label class="fs-6 form-label required">PKG</label>
+														<input class="form-control form-control-lg form-control-solid required" type="number" value="0" id="pkg" name="pkg"  required>
+													</div>
+													<!--begin::Form Group-->
+												</div>
+												<div class="col-lg-4 col-md-4 mt-6">
+													<!--end::Form Group-->
+													<div id="div-desa">
+														<label class="fs-6 form-label required">TBC</label>
+														<input class="form-control form-control-lg form-control-solid required" type="number" value="0" id="tbc" name="tbc"  required>
+													</div>
+													<!--end::Form Group-->
+												</div>
+											</div>
 											<div class="col-lg-6 col-md-6 mt-8">
 												<label class="fs-6 form-label fw-bolder">Kelestarian Lingkungan Hidup</label>
 											</div>
@@ -326,6 +352,45 @@
 														<input class="form-control form-control-lg form-control-solid required" type="number" value="0" id="pnya_tab_keluarga" name="pnya_tab_keluarga"  required>
 													</div>
 													<!--begin::Form Group-->
+												</div>
+											</div>
+											<div class="fv-row row md-8">
+												<div class="col-lg-12 col-md-12 mt-6">
+													<!--end::Form Group-->
+													<div id="div-kec">
+														<label class="fs-6 form-label required">Jumlah KK Memiliki Asuransi Kesehatan</label>
+														<input class="form-control form-control-lg form-control-solid required" type="number" value="0" id="kk_asuransi_kesehatan" name="kk_asuransi_kesehatan"  required>
+													</div>
+													<!--begin::Form Group-->
+												</div>
+											</div>
+											<div class="col-lg-6 col-md-6 mt-8">
+												<label class="fs-6 form-label fw-bolder">Program Unggulan (Gerakan Keluarga Sehat Tanggap &amp; Tangguh Bencana / GKSTTB)</label>
+											</div>
+											<div class="fv-row row md-8">
+												<div class="col-lg-4 col-md-4 mt-6">
+													<!--end::Form Group-->
+													<div id="div-kec">
+														<label class="fs-6 form-label required">Program Unggulan - Kesehatan</label>
+														<input class="form-control form-control-lg form-control-solid required" type="number" value="0" id="prog_kesehatan" name="prog_kesehatan"  required>
+													</div>
+													<!--begin::Form Group-->
+												</div>
+												<div class="col-lg-4 col-md-4 mt-6">
+													<!--end::Form Group-->
+													<div id="div-kec">
+														<label class="fs-6 form-label required">Program Unggulan - Kelestarian Lingkungan Hidup</label>
+														<input class="form-control form-control-lg form-control-solid required" type="number" value="0" id="prog_kelestarian" name="prog_kelestarian"  required>
+													</div>
+													<!--begin::Form Group-->
+												</div>
+												<div class="col-lg-4 col-md-4 mt-6">
+													<!--end::Form Group-->
+													<div id="div-desa">
+														<label class="fs-6 form-label required">Program Unggulan - Perencanaan Sehat</label>
+														<input class="form-control form-control-lg form-control-solid required" type="number" value="0" id="prog_perencanaan_sehat" name="prog_perencanaan_sehat"  required>
+													</div>
+													<!--end::Form Group-->
 												</div>
 											</div>
 											<div class="fv-row row ">
