@@ -196,7 +196,7 @@
 												</div>
 											</div>
 											<div class="fv-row row md-8">
-												<div class="col-lg-6 col-md-6 mt-6">
+												<div class="col-lg-4 col-md-4 mt-6">
 													<!--end::Form Group-->
 													<div id="div-kec">
 														<label class="fs-6 form-label required">Pemanfaatan Pekarangan Untuk Toga</label>
@@ -204,11 +204,19 @@
 													</div>
 													<!--begin::Form Group-->
 												</div>
-												<div class="col-lg-6 col-md-6 mt-6">
+												<div class="col-lg-4 col-md-4 mt-6">
 													<!--end::Form Group-->
 													<div id="div-kec">
-														<label class="fs-6 form-label required">Pemanfaatan Pekarangan Untuk Tanaman Keras</label>
+														<label class="fs-6 form-label required">Tanaman Keras</label>
 														<input class="form-control form-control-lg form-control-solid required" type="number" value="0" id="pangan_tanaman_keras" name="pangan_tanaman_keras"  required>
+													</div>
+													<!--begin::Form Group-->
+												</div>
+												<div class="col-lg-4 col-md-4 mt-6">
+													<!--end::Form Group-->
+													<div id="div-kec">
+														<label class="fs-6 form-label required">Tanaman Lainnya</label>
+														<input class="form-control form-control-lg form-control-solid required" type="number" value="0" id="pangan_tanaman_lainnya" name="pangan_tanaman_lainnya"  required>
 													</div>
 													<!--begin::Form Group-->
 												</div>

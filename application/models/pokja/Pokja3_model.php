@@ -33,6 +33,7 @@ class Pokja3_model extends MY_Model
         $select .= $this->table . ".pangan_lumbunghidup, ";
         $select .= $this->table . ".pangan_toga, ";
         $select .= $this->table . ".pangan_tanaman_keras, ";
+        $select .= $this->table . ".pangan_tanaman_lainnya, ";
         $select .= $this->table . ".industri_pangan, ";
         $select .= $this->table . ".insdustri_sandang, ";
         $select .= $this->table . ".industri_jasa, ";

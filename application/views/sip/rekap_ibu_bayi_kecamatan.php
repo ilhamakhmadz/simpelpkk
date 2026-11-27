@@ -128,105 +128,75 @@
                     </div>
                 </div>
 
-                <!-- Tabel List Data Ringkas (seperti di desa, klik Detail untuk detail) -->
+                <!-- Tabel List Data Ringkas Tingkat Kecamatan -->
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-hover align-middle text-center gs-4 gy-3 fs-6 border-gray-300">
+                    <table class="table table-bordered table-striped table-hover align-middle gs-4 gy-3 fs-6 border-gray-300">
                         <thead class="bg-primary text-white fw-bolder">
                             <tr>
                                 <th class="text-center align-middle" style="width: 50px;">NO</th>
-                                <th class="text-start align-middle" style="min-width: 160px;">NAMA DESA / KEL</th>
-                                <th class="text-center align-middle">JML DUSUN/LINGK</th>
-                                <th class="text-center align-middle">RW</th>
-                                <th class="text-center align-middle">RT</th>
-                                <th class="text-center align-middle">DASA WISMA</th>
+                                <th class="text-start align-middle" style="min-width: 180px;">NAMA DESA / KELURAHAN</th>
+                                <th class="text-center align-middle">JUMLAH WILAYAH</th>
                                 <th class="text-center align-middle">IBU HAMIL</th>
-                                <th class="text-center align-middle">MELAHIRKAN</th>
-                                <th class="text-center align-middle">NIFAS</th>
-                                <th class="text-center align-middle">IBU MENINGGAL</th>
-                                <th class="text-center align-middle">BAYI LAHIR</th>
-                                <th class="text-center align-middle">BAYI MENINGGAL</th>
-                                <th class="text-center align-middle">BALITA MENINGGAL</th>
-                                <th class="text-center align-middle" style="width: 100px;">AKSI</th>
+                                <th class="text-center align-middle">KELAHIRAN BAYI</th>
+                                <th class="text-center align-middle">KEMATIAN (IBU/BAYI/BALITA)</th>
+                                <th class="text-center align-middle" style="width: 180px;">AKSI</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             if (!empty($rekap_kecamatan)):
                                 $no = 1;
-                                $tot_dusun = $tot_rw = $tot_rt = $tot_dsw = $tot_hamil = $tot_mel = $tot_nifas = $tot_imen = 0;
-                                $tot_bl = $tot_bp = $tot_bml = $tot_bmp = $tot_bal_l = $tot_bal_p = 0;
-
                                 foreach ($rekap_kecamatan as $item):
-                                    $tot_dusun    += $item->jml_dusun;
-                                    $tot_rw       += $item->jml_rw;
-                                    $tot_rt       += $item->jml_rt;
-                                    $tot_dsw      += $item->jml_dasawisma;
-                                    $tot_hamil    += $item->ibu_hamil;
-                                    $tot_mel      += $item->ibu_melahirkan;
-                                    $tot_nifas    += $item->ibu_nifas;
-                                    $tot_imen     += $item->ibu_meninggal;
-                                    $tot_bl       += $item->bayi_lahir_l;
-                                    $tot_bp       += $item->bayi_lahir_p;
-                                    $tot_bml      += $item->bayi_meninggal_l;
-                                    $tot_bmp      += $item->bayi_meninggal_p;
-                                    $tot_bal_l    += $item->balita_meninggal_l;
-                                    $tot_bal_p    += $item->balita_meninggal_p;
-                                    $bayi_lahir   = $item->bayi_lahir_l + $item->bayi_lahir_p;
-                                    $bayi_men     = $item->bayi_meninggal_l + $item->bayi_meninggal_p;
-                                    $balita_men   = $item->balita_meninggal_l + $item->balita_meninggal_p;
-                                    $item_json    = htmlspecialchars(json_encode($item), ENT_QUOTES, 'UTF-8');
+                                    $bayi_lahir = $item->bayi_lahir_l + $item->bayi_lahir_p;
+                                    $total_kematian = $item->ibu_meninggal + $item->bayi_meninggal_l + $item->bayi_meninggal_p + $item->balita_meninggal_l + $item->balita_meninggal_p;
+                                    $item_json = htmlspecialchars(json_encode($item), ENT_QUOTES, 'UTF-8');
                             ?>
                                 <tr>
-                                    <td><?php echo $no++; ?></td>
+                                    <td class="text-center fw-bold"><?php echo $no++; ?></td>
                                     <td class="text-start fw-bolder text-dark">
                                         <i class="fa fa-building text-primary me-2"></i><?php echo htmlspecialchars($item->Nama_Desa); ?>
                                     </td>
-                                    <td><span class="badge badge-light-dark fw-bold"><?php echo $item->jml_dusun; ?></span></td>
-                                    <td><span class="badge badge-light-primary fw-bold"><?php echo $item->jml_rw; ?></span></td>
-                                    <td><span class="badge badge-light-info fw-bold"><?php echo $item->jml_rt; ?></span></td>
-                                    <td><span class="badge badge-light-warning fw-bold"><?php echo $item->jml_dasawisma; ?></span></td>
-                                    <td class="fw-bolder text-dark"><?php echo $item->ibu_hamil; ?></td>
-                                    <td class="fw-bolder"><?php echo $item->ibu_melahirkan; ?></td>
-                                    <td class="fw-bolder"><?php echo $item->ibu_nifas; ?></td>
-                                    <td><span class="badge badge-light-danger fw-bold"><?php echo $item->ibu_meninggal; ?></span></td>
-                                    <td>
-                                        <span class="fw-bolder text-success"><?php echo $bayi_lahir; ?></span>
-                                        <div class="text-muted fs-8">(L:<?php echo $item->bayi_lahir_l; ?> P:<?php echo $item->bayi_lahir_p; ?>)</div>
+                                    <td class="text-center">
+                                        <span class="badge badge-light-dark fw-bold"><?php echo $item->jml_dusun; ?> Dusun</span>
+                                        <span class="badge badge-light-primary fw-bold"><?php echo $item->jml_rw; ?> RW</span>
+                                        <span class="badge badge-light-info fw-bold"><?php echo $item->jml_rt; ?> RT</span>
+                                        <span class="badge badge-light-warning fw-bold"><?php echo $item->jml_dasawisma; ?> DSW</span>
                                     </td>
-                                    <td>
-                                        <span class="badge badge-light-danger fw-bold"><?php echo $bayi_men; ?></span>
+                                    <td class="text-center fw-bolder text-primary fs-5">
+                                        <?php echo number_format($item->ibu_hamil, 0, ',', '.'); ?> Orang
+                                        <div class="text-muted fs-8 fw-normal">Lahir: <?php echo $item->ibu_melahirkan; ?> | Nifas: <?php echo $item->ibu_nifas; ?></div>
                                     </td>
-                                    <td>
-                                        <span class="badge badge-light-danger fw-bold"><?php echo $balita_men; ?></span>
+                                    <td class="text-center">
+                                        <span class="fw-bolder text-success fs-5"><?php echo number_format($bayi_lahir, 0, ',', '.'); ?> Bayi</span>
+                                        <div class="text-muted fs-8">(L: <?php echo $item->bayi_lahir_l; ?> | P: <?php echo $item->bayi_lahir_p; ?>)</div>
                                     </td>
-                                    <td>
-                                        <button type="button" class="btn btn-sm btn-primary px-3 py-1 fw-bold fs-8" onclick='openModalDetailKec6(<?php echo $item_json; ?>)'>
-                                            <i class="fa fa-eye me-1"></i> Detail
-                                        </button>
+                                    <td class="text-center">
+                                        <?php if ($total_kematian > 0): ?>
+                                            <span class="badge badge-light-danger fw-bolder fs-7"><?php echo $total_kematian; ?> Kasus</span>
+                                            <div class="text-muted fs-8">(Ibu: <?php echo $item->ibu_meninggal; ?>, Bayi: <?php echo ($item->bayi_meninggal_l + $item->bayi_meninggal_p); ?>, Balita: <?php echo ($item->balita_meninggal_l + $item->balita_meninggal_p); ?>)</div>
+                                        <?php else: ?>
+                                            <span class="badge badge-light-success fw-bold">Nihil (0)</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="d-flex justify-content-center align-items-center gap-1 flex-wrap">
+                                            <button type="button" class="btn btn-sm btn-primary px-3 py-1 fw-bold fs-8" title="Lihat Semua Data 19 Kolom" onclick='openModalDetailKec6(<?php echo $item_json; ?>)'>
+                                                <i class="fa fa-eye me-1"></i> Detail
+                                            </button>
+                                            <a href="<?php echo site_url("sip/sip6_pdf?desa_id={$item->Kd_Desa}&bulan={$selected_bulan}&tahun={$selected_tahun}"); ?>" target="_blank" class="btn btn-sm btn-light-danger px-2 py-1 fw-bold fs-8" title="Cetak PDF Desa">
+                                                <i class="fa fa-file-pdf-o me-1"></i> PDF
+                                            </a>
+                                            <a href="<?php echo site_url("sip/sip6_excel?desa_id={$item->Kd_Desa}&bulan={$selected_bulan}&tahun={$selected_tahun}"); ?>" class="btn btn-sm btn-light-success px-2 py-1 fw-bold fs-8" title="Cetak Excel Desa">
+                                                <i class="fa fa-file-excel-o me-1"></i> XLS
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
-                        <tfoot class="bg-light-primary fw-bolder text-dark border-top-2 border-primary">
-                            <tr>
-                                <th colspan="2" class="text-center align-middle">JUMLAH</th>
-                                <th><?php echo $tot_dusun; ?></th>
-                                <th><?php echo $tot_rw; ?></th>
-                                <th><?php echo $tot_rt; ?></th>
-                                <th><?php echo $tot_dsw; ?></th>
-                                <th><?php echo $tot_hamil; ?></th>
-                                <th><?php echo $tot_mel; ?></th>
-                                <th><?php echo $tot_nifas; ?></th>
-                                <th><?php echo $tot_imen; ?></th>
-                                <th><?php echo $tot_bl + $tot_bp; ?><div class="text-muted fs-8">(L:<?php echo $tot_bl; ?> P:<?php echo $tot_bp; ?>)</div></th>
-                                <th><?php echo $tot_bml + $tot_bmp; ?></th>
-                                <th><?php echo $tot_bal_l + $tot_bal_p; ?></th>
-                                <th></th>
-                            </tr>
-                        </tfoot>
                         <?php else: ?>
                             <tr>
-                                <td colspan="14" class="text-center py-10 text-muted">
+                                <td colspan="7" class="text-center py-10 text-muted">
                                     <i class="fa fa-folder-open-o fa-3x mb-3 text-gray-400"></i>
                                     <p class="fs-6 fw-bold mb-2">Belum ada data rekap ibu hamil & bayi dari Desa/Kelurahan di Kecamatan ini untuk periode ini.</p>
                                     <p class="fs-7 text-muted">Pastikan data sudah diinput di tingkat Desa/Kelurahan pada SIP 6 terlebih dahulu.</p>
@@ -298,7 +268,15 @@
                 <!-- Summary cards -->
                 <div class="row g-3 mt-3" id="detail_kec6_cards"></div>
             </div>
-            <div class="modal-footer bg-light py-3">
+            <div class="modal-footer bg-light py-3 d-flex justify-content-between align-items-center">
+                <div class="d-flex gap-2">
+                    <a id="btn_modal_pdf_desa" href="#" target="_blank" class="btn btn-sm btn-danger fw-bolder">
+                        <i class="fa fa-file-pdf-o me-1"></i> Cetak PDF Desa
+                    </a>
+                    <a id="btn_modal_excel_desa" href="#" class="btn btn-sm btn-success fw-bolder">
+                        <i class="fa fa-file-excel-o me-1"></i> Cetak Excel Desa
+                    </a>
+                </div>
                 <button type="button" class="btn btn-secondary fw-bolder" data-bs-dismiss="modal">Tutup</button>
             </div>
         </div>
@@ -310,6 +288,11 @@ function openModalDetailKec6(item) {
     document.getElementById('detail_kec6_modal_title').innerHTML =
         '<i class="fa fa-file-text-o text-white me-2"></i> Detail Rekap: ' + item.Nama_Desa +
         ' (<?php echo strtoupper($months[intval($selected_bulan)]); ?> <?php echo $selected_tahun; ?>)';
+
+    var pdfUrl = '<?php echo site_url("sip/sip6_pdf"); ?>?desa_id=' + item.Kd_Desa + '&bulan=<?php echo $selected_bulan; ?>&tahun=<?php echo $selected_tahun; ?>';
+    var excelUrl = '<?php echo site_url("sip/sip6_excel"); ?>?desa_id=' + item.Kd_Desa + '&bulan=<?php echo $selected_bulan; ?>&tahun=<?php echo $selected_tahun; ?>';
+    document.getElementById('btn_modal_pdf_desa').setAttribute('href', pdfUrl);
+    document.getElementById('btn_modal_excel_desa').setAttribute('href', excelUrl);
 
     var htmlTable = '<tr>' +
         '<td class="text-start fw-bold">' + item.Nama_Desa + '</td>' +

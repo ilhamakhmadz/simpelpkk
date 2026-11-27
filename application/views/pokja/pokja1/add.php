@@ -268,10 +268,10 @@
 			<?php
 			$programs = [
 				'kisah'  => 'KISAH (Penghayatan & Pengamalan Pancasila)',
-				'krisan' => 'KRISAN (Kreasi Seni & Budaya)',
-				'kijat'  => 'KIJAT (Kemitraan Jaringan Teknologi)',
-				'kuat'   => 'KUAT (Kader Upaya Kemampuan)',
-				'kisak'  => 'KISAK (Kemitraan Sosial Keagamaan)',
+				'krisan' => 'KRISAN (Keluarga Indonesia Sadar Administrasi Kependudukan / Seni)',
+				'kilas'  => 'KILAS (Keluarga Indonesia Lindungi Anak dari Kekerasan Seksual)',
+				'kiat'   => 'KIAT (Keluarga Indonesia Terampil / Anti Terorisme)',
+				'kisak'  => 'KISAK (Keluarga Indonesia Sadar Administrasi Kependudukan)',
 				'pkbn'   => 'PKBN (Pendidikan Pendahuluan Bela Negara)',
 			];
 			foreach ($programs as $kode => $label): ?>

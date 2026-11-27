@@ -52,17 +52,17 @@ class Pokja1_model extends MY_Model
         $select .= $this->table . ".krisan_metode, ";
         $select .= $this->table . ".krisan_jml_sasaran, ";
 
-        // Program KIJAT
-        $select .= $this->table . ".kijat_kegiatan, ";
-        $select .= $this->table . ".kijat_vol_keg, ";
-        $select .= $this->table . ".kijat_metode, ";
-        $select .= $this->table . ".kijat_jml_sasaran, ";
+        // Program KILAS
+        $select .= $this->table . ".kilas_kegiatan, ";
+        $select .= $this->table . ".kilas_vol_keg, ";
+        $select .= $this->table . ".kilas_metode, ";
+        $select .= $this->table . ".kilas_jml_sasaran, ";
 
-        // Program KUAT
-        $select .= $this->table . ".kuat_kegiatan, ";
-        $select .= $this->table . ".kuat_vol_keg, ";
-        $select .= $this->table . ".kuat_metode, ";
-        $select .= $this->table . ".kuat_jml_sasaran, ";
+        // Program KIAT
+        $select .= $this->table . ".kiat_kegiatan, ";
+        $select .= $this->table . ".kiat_vol_keg, ";
+        $select .= $this->table . ".kiat_metode, ";
+        $select .= $this->table . ".kiat_jml_sasaran, ";
 
         // Program KISAK
         $select .= $this->table . ".kisak_kegiatan, ";
